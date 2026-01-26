@@ -5,13 +5,14 @@ const categorySchema = new mongoose.Schema({
     name : {
         type : String,
         required : true,
-        unique : true
+        unique : true,
+        trim : true
     },
     description : {
         type : String,
         required : true
     },
-    isListed : {
+    isActive : {      // soft delete 
         type : Boolean,      // category is visible to users
         default : true
     },
@@ -23,4 +24,4 @@ const categorySchema = new mongoose.Schema({
 
 const Category = mongoose.model("Category",categorySchema)
 
-export default categorySchema
+export default Category
