@@ -1,0 +1,21 @@
+<%- include("layout", { body: `
+  <h2>Admin Login</h2>
+
+  <form method="POST" action="/admin/login">
+    <div>
+      <label>Email</label><br/>
+      <input type="email" name="email" placeholder="Enter admin email" required />
+    </div>
+
+    <br/>
+
+    <div>
+      <label>Password</label><br/>
+      <input type="password" name="password" placeholder="Enter password" required />
+    </div>
+
+    <br/>
+
+    <button type="submit">Login</button>
+  </form>
+` }) %>

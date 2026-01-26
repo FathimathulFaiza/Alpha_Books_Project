@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up | Alpha Books</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+
+<body>
+
+  <%- include("../partials/header") %>
+
+  <main class="auth-container">
+    <section class="auth-left">
+      <h2>Join Alpha Books</h2>
+      <p>Create your account to explore books</p>
+    </section>
+
+    <section class="auth-right">
+      <h1>Sign Up</h1>
+
+      <form>
+        <input type="text" placeholder="Full Name" />
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+
+        <button type="submit">Create Account</button>
+      </form>
+
+      <p>Already have an account? <a href="/login">Login</a></p>
+    </section>
+  </main>
+
+  <%- include("../partials/footer") %>
+
+</body>
+</html>

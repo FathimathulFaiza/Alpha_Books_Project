@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <%- include("../partials/header") %>
+
+  <!-- Admin Layout -->
+  <div style="display:flex; gap:20px; min-height:80vh;">
+
+    <!-- Sidebar -->
+    <aside style="width:200px; background:#eee; padding:10px;">
+      <h3>Admin</h3>
+      <ul>
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/admin/products">Products</a></li>
+        <li><a href="/admin/orders">Orders</a></li>
+        <li><a href="/admin/users">Users</a></li>
+      </ul>
+    </aside>
+
+    <!-- Page Content -->
+    <main style="padding:20px; flex:1;">
+      <%- body %>
+    </main>
+
+  </div>
+
+  <!-- Footer -->
+  <%- include("../partials/footer") %>
+
+</body>
+</html>
