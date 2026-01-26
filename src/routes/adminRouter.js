@@ -1,5 +1,6 @@
 
 import express from "express"
+import Category from "../models/categoryModel.js"
 
 const router = express.Router()
 
@@ -42,5 +43,29 @@ router.get("/orders",(req,res)=>{
 router.get("/users",(req,res)=>{
     res.render("admin/users")
 })
+
+router.get("/categories",(req,res)=>{
+    res.render("admin/categories")
+})
+
+router.post("/categories", async(req,res)=>{
+    try{
+        const {name, description} = req.body
+
+        await Category.create({
+            name,
+            description
+        })
+        res.redirect("/admin/categories")
+
+    }
+    catch(error){
+        console.log(error)
+        res.redirect("/admin/categories")
+    }
+
+})
+
+
 
 export default router
