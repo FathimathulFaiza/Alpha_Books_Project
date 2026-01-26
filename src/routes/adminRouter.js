@@ -49,12 +49,14 @@ router.get("/categories",(req,res)=>{
 })
 
 router.post("/categories", async(req,res)=>{
-    
-        console.log("Category form data : ",req.body)
-     
+
+    const {name, description} = req.body
+
+    await Category.create({
+        name,
+        description
+    })
         res.redirect("/admin/categories")
-
-
 })
 
 
