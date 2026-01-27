@@ -3,24 +3,38 @@
 <head>
   <title>Shop | Alpha Books</title>
   <link rel="stylesheet" href="/public/css/style.css">
+  <h3>Categories</h3>
+
+
 </head>
 
 <body>
 
   <%- include("../partials/header") %>
 
-  <main class="shop-container">
+<main class="shop-container" style="display: flex; gap: 20px;">
 
-    <section class="shop-header">
-      <h1>Books Collection</h1>
-      <p>Browse all available books</p>
-    </section>
+  <!-- LEFT SIDEBAR -->
+  <aside style="width: 200px;">
+    <h3>Categories</h3>
+  <ul>
+  <% categories.forEach(cat => { %>
+    <li>
+      <a href="/shop?category=<%= cat._id %>">
+        <%= cat.name %>
+      </a>
+    </li>
+  <% }) %>
+</ul>
+  </aside>
 
-    <section class="product-list">
-      <p>Products will be displayed here</p>
-    </section>
+  <!-- RIGHT CONTENT -->
+  <section style="flex: 1;">
+    <h1>Books Collection</h1>
+    <p>Products will be displayed here</p>
+  </section>
 
-  </main>
+</main>
 
   <%- include("../partials/footer") %>
 

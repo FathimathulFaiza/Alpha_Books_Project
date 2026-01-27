@@ -33,6 +33,11 @@ router.get("/change-password", (req, res) => {
 
 // Shop
 router.get("/shop", async (req, res) => {
+
+  const selectedCategory = req.query.category
+
+  console.log("ID of the selected category is : ", selectedCategory)
+
   const categories = await Category.find({isActive : true})
 
   res.render("user/shop",{categories});
