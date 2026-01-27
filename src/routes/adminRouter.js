@@ -55,6 +55,12 @@ router.post("/categories", async(req,res)=>{
 
     const {name, description} = req.body
 
+    const existingCategory = await Category.findOne({name})
+
+    if(existingCategory){
+        return res.redirect("/admin/categories")
+    }
+
     await Category.create({
         name,
         description
