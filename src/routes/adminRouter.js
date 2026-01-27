@@ -1,6 +1,7 @@
 
 import express from "express"
 import Category from "../models/categoryModel.js"
+import Product from "../models/productModel.js"
 
 const router = express.Router()
 
@@ -81,6 +82,20 @@ router.post("/categories/toggle/:id",async(req,res)=>{
         res.redirect("/admin/categories")
     
 })
+
+router.get("/test-product", async (req, res) => {
+  await Product.create({
+    title: "Atomic Habits",
+    author: "James Clear",
+    description: "A book about building good habits",
+    price: 499,
+    category: "6977a671b10307f65a463931", // book category ID
+    stock: 10,
+    images: ["test.jpg"]
+  });
+
+  res.send("Product created");
+});
 
 
 export default router

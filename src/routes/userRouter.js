@@ -1,6 +1,7 @@
 
 import express from "express"
 import Category from "../models/categoryModel.js";
+import Product from "../models/productModel.js"
 
 const router = express.Router()
 
@@ -40,7 +41,17 @@ router.get("/shop", async (req, res) => {
 
   const categories = await Category.find({isActive : true})
 
-  res.render("user/shop",{categories});
+  const products = selectedCategory
+  ? await Product.find({category : selectedCategory}) 
+  : []
+
+  console.log("Products Count : ",products.length)
+
+  res.render("user/shop",{
+    categories,
+    selectedCategory,
+    products
+  });
 });
 
 router.get("/product/:id", (req, res) => {

@@ -19,11 +19,11 @@
     <h3>Categories</h3>
   <ul>
   <% categories.forEach(cat => { %>
-    <li>
-      <a href="/shop?category=<%= cat._id %>">
-        <%= cat.name %>
-      </a>
-    </li>
+<li style="<%= selectedCategory == cat._id.toString() ? 'font-weight:bold;color:blue;' : '' %>">
+  <a href="/shop?category=<%= cat._id %>">
+    <%= cat.name %>
+  </a>
+</li>
   <% }) %>
 </ul>
   </aside>
