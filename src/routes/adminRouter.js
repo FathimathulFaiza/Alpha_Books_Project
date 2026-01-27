@@ -44,8 +44,11 @@ router.get("/users",(req,res)=>{
     res.render("admin/users")
 })
 
-router.get("/categories",(req,res)=>{
-    res.render("admin/categories")
+router.get("/categories", async(req,res)=>{
+
+    const categories = await Category.find()
+
+    res.render("admin/categories", {categories})
 })
 
 router.post("/categories", async(req,res)=>{

@@ -1,4 +1,8 @@
-
+<ul>
+  <% categories.forEach(cat => { %>
+    <li><%= cat.name %></li>
+  <% }) %>
+</ul>
 <form action="/admin/categories" method="POST">
 
   <label>Category Name</label><br>
