@@ -69,5 +69,18 @@ router.post("/categories", async(req,res)=>{
 })
 
 
+router.post("/categories/toggle/:id",async(req,res)=>{
+    const categoryId = req.params.id
+
+    const category = await Category.findById(categoryId)
+
+    category.isActive = !category.isActive
+
+    await category.save()
+
+        res.redirect("/admin/categories")
+    
+})
+
 
 export default router

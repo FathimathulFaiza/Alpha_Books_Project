@@ -1,6 +1,17 @@
 <ul>
   <% categories.forEach(cat => { %>
-    <li><%= cat.name %></li>
+    <li>
+      <strong><%= cat.name %></strong><br>
+      <small><%= cat.description %></small><br>
+
+      <!-- Soft delete button -->
+      <form action="/admin/categories/toggle/<%= cat._id %>" method="POST">
+        <button type="submit">
+          <%= cat.isActive ? "Disable" : "Enable" %>
+        </button>
+      </form>
+
+    </li>
   <% }) %>
 </ul>
 <form action="/admin/categories" method="POST">
