@@ -29,10 +29,24 @@
   </aside>
 
   <!-- RIGHT CONTENT -->
-  <section style="flex: 1;">
-    <h1>Books Collection</h1>
-    <p>Products will be displayed here</p>
-  </section>
+<section style="flex: 1;">
+  <h1>Books Collection</h1>
+
+  <% if (products.length === 0) { %>
+    <p>No products available for this category</p>
+  <% } else { %>
+    <ul>
+      <% products.forEach(product => { %>
+        <li>
+          <strong><%= product.title %></strong><br>
+          Price: ₹<%= product.price %>
+        </li>
+        <br>
+      <% }) %>
+    </ul>
+  <% } %>
+
+</section>
 
 </main>
 
