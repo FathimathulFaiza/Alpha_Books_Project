@@ -1,5 +1,6 @@
 
 import express from "express"
+import Category from "../models/categoryModel.js";
 
 const router = express.Router()
 
@@ -31,8 +32,10 @@ router.get("/change-password", (req, res) => {
 });
 
 // Shop
-router.get("/shop", (req, res) => {
-  res.render("user/shop");
+router.get("/shop", async (req, res) => {
+  const categories = await Category.find({isActive : true})
+
+  res.render("user/shop",{categories});
 });
 
 router.get("/product/:id", (req, res) => {
