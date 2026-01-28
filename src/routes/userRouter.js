@@ -54,8 +54,15 @@ router.get("/shop", async (req, res) => {
   });
 });
 
-router.get("/product/:id", (req, res) => {
-  res.render("user/product_details");
+router.get("/product/:id", async(req, res) => {
+  const productId = req.params.id
+
+  const product = await Product.findById(productId)
+
+  if(!product){
+    return res.redirect("/shop")
+  }
+  res.render("user/product_details", {product});
 });
 
 export default router;
