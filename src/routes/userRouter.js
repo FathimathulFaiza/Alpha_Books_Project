@@ -55,7 +55,7 @@ router.get("/shop", async (req, res) => {
 });
 
 router.get("/product/:id", (req, res) => {
-  res.render("user/product_detail");
+  res.render("user/product_details");
 });
 
 export default router;

@@ -38,8 +38,11 @@
     <ul>
       <% products.forEach(product => { %>
         <li>
-          <strong><%= product.title %></strong><br>
-          Price: ₹<%= product.price %>
+       <a href="/product/<%= product._id %>">
+  <strong><%= product.title %></strong>
+</a>
+<br>
+Price: ₹<%= product.price %>
         </li>
         <br>
       <% }) %>
