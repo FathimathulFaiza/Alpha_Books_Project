@@ -42,7 +42,9 @@ router.get("/shop", async (req, res) => {
   const categories = await Category.find({isActive : true})
 
   const products = selectedCategory
-  ? await Product.find({category : selectedCategory}) 
+  ? await Product.find(
+    {category : selectedCategory,
+     isActive : true}) 
   : []
 
   console.log("Products Count : ",products.length)
@@ -64,5 +66,11 @@ router.get("/product/:id", async(req, res) => {
   }
   res.render("user/product_details", {product});
 });
+
+
+
+
+
+
 
 export default router;
