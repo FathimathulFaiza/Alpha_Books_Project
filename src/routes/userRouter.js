@@ -81,40 +81,32 @@ router.get("/shop", async (req, res) => {
   }
 
 
- // filter
+ // filter ( Search works without category - Category is optional)
 
-   let filterQuery = {}
-   let products = []
-   let totalProducts = 0
+   let filterQuery = {
+    isActive : true,
+    $or :[
+      {title : {$regex : search, $options :"i"}},
+      {author : {$regex : search, $options : "i"}}
+    ]
+   }
 
-  if(selectedCategory){               // Shows products only from selected category
-
-  filterQuery = {
-      category : selectedCategory,
-      isActive : true,    // hides the blocked,unlisted, soft deleted products - shows only active products
-      $or:[
-        {title : {$regex : search, $options : "i"}},    // filter search by title and author   -> "i" = case-insensitive
-        {author : {$regex : search, $options : "i"}}
-      ]
-    }
-    }
+   if(selectedCategory){
+    filterQuery.category = selectedCategory   // add category only if selected
+   }
 
 
- // Products with pagination   
+ // fetch Products with pagination   
    
-    if(selectedCategory){
-      products = await Product.find(filterQuery) 
-      .sort(sortQuery)    //  applies whichever sorting user selected
-      .skip(skip)
-      .limit(limit)
-    
+   const products = await Product.find(filterQuery)
+   .sort(sortQuery)
+   .skip(skip)
+   .limit(limit)
 
-  // count totalProducts 
 
-    totalProducts = await Product.countDocuments(filterQuery)
+   // pagination count
 
-    
-  }
+   const totalProducts = await Product.countDocuments(filterQuery) 
 
    const totalPages = Math.ceil(totalProducts/limit)   // count total products
 

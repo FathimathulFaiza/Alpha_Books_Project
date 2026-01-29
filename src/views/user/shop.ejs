@@ -33,6 +33,21 @@
       <% }) %>
     </ul>
   </aside>
+  
+  <form method="GET" action="/shop" style="margin-bottom:20px;">
+  <input
+    type="text"
+    name="search"
+    placeholder="Search by title or author"
+    value="<%= search %>"
+  />
+
+  <% if (selectedCategory) { %>
+    <input type="hidden" name="category" value="<%= selectedCategory %>">
+  <% } %>
+
+  <button type="submit">Search</button>
+</form>
 
   <!-- RIGHT SIDE : PRODUCTS -->
   <section style="flex:1; padding-left:15px;">
