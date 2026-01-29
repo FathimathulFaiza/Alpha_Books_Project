@@ -9,81 +9,78 @@
 
 <%- include("../partials/header") %>
 
-<main class="shop-container" style="display:flex; gap:20px; padding:20px;">
+<main class="shop-wrapper">
 
-  <!-- LEFT SIDEBAR : CATEGORIES -->
-  <aside style="width:220px; border-right:1px solid #ddd; padding-right:15px;">
+  <!-- SIDEBAR -->
+  <aside class="shop-sidebar">
     <h3>Categories</h3>
-
-    <ul style="list-style:none; padding:0;">
+    <ul>
       <% categories.forEach(cat => { %>
-        <li style="margin-bottom:8px;">
-          <a 
-            href="/shop?category=<%= cat._id %>"
-            style="
-              text-decoration:none;
-              <%= selectedCategory == cat._id.toString() 
-                ? 'font-weight:bold;color:blue;' 
-                : 'color:black;' %>
-            "
-          >
+        <li class="<%= selectedCategory == cat._id.toString() ? 'active' : '' %>">
+          <a href="/shop?category=<%= cat._id %>">
             <%= cat.name %>
           </a>
         </li>
       <% }) %>
     </ul>
   </aside>
-  
-  <form method="GET" action="/shop" style="margin-bottom:20px;">
-  <input
-    type="text"
-    name="search"
-    placeholder="Search by title or author"
-    value="<%= search %>"
-  />
 
-  <% if (selectedCategory) { %>
-    <input type="hidden" name="category" value="<%= selectedCategory %>">
-  <% } %>
+  <!-- MAIN CONTENT -->
+  <section class="shop-main">
 
-  <button type="submit">Search</button>
-</form>
+    <!-- FILTER BAR -->
+    <form method="GET" action="/shop" class="shop-filters">
 
-  <!-- RIGHT SIDE : PRODUCTS -->
-  <section style="flex:1; padding-left:15px;">
-    <h1>Books Collection</h1>
+      <input
+        type="text"
+        name="search"
+        placeholder="Search by book or author"
+        value="<%= search %>"
+      />
 
+      <% if (selectedCategory) { %>
+        <input type="hidden" name="category" value="<%= selectedCategory %>">
+      <% } %>
+
+      <select name="sort">
+        <option value="">Sort</option>
+        <option value="price_asc">Price: Low → High</option>
+        <option value="price_desc">Price: High → Low</option>
+        <option value="name_asc">Name: A → Z</option>
+        <option value="name_desc">Name: Z → A</option>
+      </select>
+
+      <button type="submit">Apply</button>
+    </form>
+
+    <h1 class="page-title">Books Collection</h1>
+
+    <!-- PRODUCTS -->
     <% if (products.length === 0) { %>
-      <p>No products available for this category</p>
+      <p class="empty-state">No products found</p>
     <% } else { %>
-      <ul style="list-style:none; padding:0;">
+      <div class="products-grid">
         <% products.forEach(product => { %>
-          <li style="margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
-            <a href="/product/<%= product._id %>" style="text-decoration:none;">
-              <strong><%= product.title %></strong>
-            </a>
-            <br>
-            <small>Author: <%= product.author %></small>
-            <br>
-            <span>Price: ₹<%= product.price %></span>
-          </li>
+          <div class="product-card">
+            <h3>
+              <a href="/product/<%= product._id %>">
+                <%= product.title %>
+              </a>
+            </h3>
+            <p class="author"><%= product.author %></p>
+            <p class="price">₹<%= product.price %></p>
+          </div>
         <% }) %>
-      </ul>
+      </div>
     <% } %>
 
     <!-- PAGINATION -->
     <% if (totalPages > 1) { %>
-      <div style="margin-top:20px;">
+      <div class="pagination">
         <% for (let i = 1; i <= totalPages; i++) { %>
           <a
-            href="/shop?category=<%= selectedCategory %>&search=<%= search %>&page=<%= i %>"
-            style="
-              margin-right:8px;
-              text-decoration:none;
-              <%= currentPage === i 
-                ? 'font-weight:bold;color:blue;' 
-                : 'color:black;' %>
-            "
+            class="<%= currentPage === i ? 'active' : '' %>"
+            href="/shop?category=<%= selectedCategory || '' %>&search=<%= search %>&page=<%= i %>"
           >
             <%= i %>
           </a>
