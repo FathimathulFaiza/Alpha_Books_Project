@@ -3,55 +3,80 @@
 <head>
   <title>Shop | Alpha Books</title>
   <link rel="stylesheet" href="/public/css/style.css">
-  <h3>Categories</h3>
-
-
 </head>
 
 <body>
 
   <%- include("../partials/header") %>
 
-<main class="shop-container" style="display: flex; gap: 20px;">
+  <main class="shop-container" style="display: flex; gap: 20px; padding: 20px;">
 
-  <!-- LEFT SIDEBAR -->
-  <aside style="width: 200px;">
-    <h3>Categories</h3>
-  <ul>
-  <% categories.forEach(cat => { %>
-<li style="<%= selectedCategory == cat._id.toString() ? 'font-weight:bold;color:blue;' : '' %>">
-  <a href="/shop?category=<%= cat._id %>">
-    <%= cat.name %>
-  </a>
-</li>
-  <% }) %>
-</ul>
-  </aside>
+    <!-- LEFT SIDEBAR -->
+    <aside style="width: 200px;">
+      <h3>Categories</h3>
 
-  <!-- RIGHT CONTENT -->
-<section style="flex: 1;">
-  <h1>Books Collection</h1>
+      <ul>
+        <% categories.forEach(cat => { %>
+          <li style="<%= selectedCategory == cat._id.toString() ? 'font-weight:bold;color:blue;' : '' %>">
+            <a href="/shop?category=<%= cat._id %>">
+              <%= cat.name %>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    </aside>
 
-  <% if (products.length === 0) { %>
-    <p>No products available for this category</p>
-  <% } else { %>
-    <ul>
-      <% products.forEach(product => { %>
-        <li>
-       <a href="/product/<%= product._id %>">
-  <strong><%= product.title %></strong>
-</a>
-<br>
-Price: ₹<%= product.price %>
-        </li>
-        <br>
-      <% }) %>
-    </ul>
-  <% } %>
+    <!-- RIGHT CONTENT -->
+    <section style="flex: 1;">
+      <h1>Books Collection</h1>
 
-</section>
+      <% if (products.length === 0) { %>
+        <p>No products available for this category</p>
+      <% } else { %>
 
-</main>
+        <ul>
+          <% products.forEach(product => { %>
+            <li>
+              <a href="/product/<%= product._id %>">
+                <strong><%= product.title %></strong>
+              </a>
+              <br>
+              Price: ₹<%= product.price %>
+            </li>
+            <br>
+          <% }) %>
+        </ul>
+
+        <!-- PAGINATION BOTTOM -->
+        <div class="pagination" style="margin-top: 20px;">
+
+          <% if (currentPage > 1) { %>
+            <a href="/shop?category=<%= selectedCategory %>&page=<%= currentPage - 1 %>">
+              Prev
+            </a>
+          <% } %>
+
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <a
+              href="/shop?category=<%= selectedCategory %>&page=<%= i %>"
+              style="<%= currentPage === i ? 'font-weight:bold;color:blue;' : '' %>"
+            >
+              <%= i %>
+            </a>
+          <% } %>
+
+          <% if (currentPage < totalPages) { %>
+            <a href="/shop?category=<%= selectedCategory %>&page=<%= currentPage + 1 %>">
+              Next
+            </a>
+          <% } %>
+
+        </div>
+
+      <% } %>
+    </section>
+
+  </main>
 
   <%- include("../partials/footer") %>
 

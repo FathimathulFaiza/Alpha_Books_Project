@@ -38,7 +38,7 @@ router.get("/change-password", (req, res) => {
 
 router.get("/shop", async (req, res) => {
 
-  // Quer params
+  // Query params
   const selectedCategory = req.query.category
 
   const search = req.query.search || ""       // search query
@@ -48,11 +48,19 @@ router.get("/shop", async (req, res) => {
   console.log("ID of the selected category is : ", selectedCategory)
    console.log("Search:", search);
 
-// pagination
+// pagination  -> Pagination must work with category + search + sort together
+
+   const page = parseInt(req.query.page) || 1
+
+   const limit = 4
+
+   const skip = (page - 1) * limit 
 
 
 
-  const categories = await Category.find({isActive : true})     // show only the category which is active - true
+// categories
+   const categories = await Category.find({isActive : true})     // show only the category which is active - true
+
 
   // sorting 
   let sortQuery = {}
@@ -73,27 +81,51 @@ router.get("/shop", async (req, res) => {
   }
 
 
-  let products = []
+ // filter
+
+   let filterQuery = {}
+   let products = []
+   let totalProducts = 0
 
   if(selectedCategory){               // Shows products only from selected category
 
-    products = await Product.find({
+  filterQuery = {
       category : selectedCategory,
       isActive : true,    // hides the blocked,unlisted, soft deleted products - shows only active products
       $or:[
         {title : {$regex : search, $options : "i"}},    // filter search by title and author   -> "i" = case-insensitive
         {author : {$regex : search, $options : "i"}}
       ]
-    }).sort(sortQuery)    //  applies whichever sorting user selected:
+    }
+    }
+
+
+ // Products with pagination   
+   
+    if(selectedCategory){
+      products = await Product.find(filterQuery) 
+      .sort(sortQuery)    //  applies whichever sorting user selected
+      .skip(skip)
+      .limit(limit)
+    
+
+  // count totalProducts 
+
+    totalProducts = await Product.countDocuments(filterQuery)
+
+    
   }
 
-  console.log("Products Count : ",products.length)
+   const totalPages = Math.ceil(totalProducts/limit)   // count total products
+
 
   res.render("user/shop",{       // rendering all these
     categories,
     selectedCategory,
     products,
-    search
+    search,
+    currentPage : page,
+    totalPages
   });
 });
 
