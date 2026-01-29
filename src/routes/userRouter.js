@@ -1,5 +1,6 @@
 
 import express from "express"
+import mongoose from "mongoose";
 import Category from "../models/categoryModel.js";
 import Product from "../models/productModel.js"
 
