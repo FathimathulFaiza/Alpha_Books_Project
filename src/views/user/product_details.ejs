@@ -1,31 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Book Details | Alpha Books</title>
+  <title><%= product.title %> | Alpha Books</title>
   <link rel="stylesheet" href="/public/css/style.css">
 </head>
 
 <body>
 
-  <%- include("../partials/header") %>
+<%- include("../partials/header") %>
 
-  <main class="product-details-container">
+<main class="product-wrapper">
 
-    <section class="product-info">
-      <h1>Book Title</h1>
-      <p>Author Name</p>
-      <p>Book description will be shown here</p>
-    </section>
+  <div class="product-card">
 
-    <section class="product-actions">
-      <p>Price: ₹499</p>
-      <button>Add to Cart</button>
-      <button>Add to Wishlist</button>
-    </section>
+    <!-- LEFT : IMAGE -->
+    <div class="product-image">
+      <img 
+        src="<%= product.images[0] || '/public/images/placeholder.png' %>" 
+        alt="<%= product.title %>"
+      />
+    </div>
 
-  </main>
+    <!-- RIGHT : DETAILS -->
+    <div class="product-info">
+      <h1><%= product.title %></h1>
+      <p class="author">by <%= product.author %></p>
 
-  <%- include("../partials/footer") %>
+      <p class="price">₹<%= product.price %></p>
+
+      <p class="description">
+        <%= product.description %>
+      </p>
+
+      <p class="stock <%= product.stock > 0 ? 'in-stock' : 'out-stock' %>">
+        <%= product.stock > 0 ? 'In Stock' : 'Out of Stock' %>
+      </p>
+
+      <div class="actions">
+        <button class="btn primary">Add to Cart</button>
+        <button class="btn secondary">Wishlist</button>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<%- include("../partials/footer") %>
 
 </body>
 </html>

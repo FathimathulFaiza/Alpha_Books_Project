@@ -123,15 +123,21 @@ router.get("/shop", async (req, res) => {
 
 
 
-router.get("/product/:id", async(req, res) => {
-  const productId = req.params.id
+router.get("/product/:id", async (req, res) => {
+  const productId = req.params.id;   // extract params id
 
-  const product = await Product.findById(productId)
-
-  if(!product){
-    return res.redirect("/shop")
+  //  prevent crash if user provided invalid id's
+  if (!mongoose.Types.ObjectId.isValid(productId)) {    // accept only validobjectId's by mongodb
+    return res.redirect("/shop");
   }
-  res.render("user/product_details", {product});
+
+  const product = await Product.findById(productId);   // fetch product from database
+
+  if (!product) {
+    return res.redirect("/shop");      // if no product - redirect to shop page -> prevents blank page or error
+  }
+
+  res.render("user/product_details", { product });
 });
 
 
