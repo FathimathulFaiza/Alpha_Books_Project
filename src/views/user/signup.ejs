@@ -1,35 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Sign Up | Alpha Books</title>
-  <link rel="stylesheet" href="/public/css/style.css">
+
+  <link rel="stylesheet" href="/public/css/style.css" />
 </head>
 
-<body>
+<body class="auth-page">
 
+  <!-- Header -->
   <%- include("../partials/header") %>
 
   <main class="auth-container">
+
+    <!-- LEFT PANEL -->
     <section class="auth-left">
-      <h2>Join Alpha Books</h2>
-      <p>Create your account to explore books</p>
+      <h1>Join Alpha Books 📚</h1>
+      <p>
+        Create your account and start discovering
+        amazing books today.
+      </p>
     </section>
 
+    <!-- RIGHT PANEL -->
     <section class="auth-right">
-      <h1>Sign Up</h1>
+      <h2>Sign Up</h2>
 
-      <form>
-        <input type="text" placeholder="Full Name" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
+      <form method="POST" action="/signup" class="auth-form">
 
-        <button type="submit">Create Account</button>
+        <!-- Full Name -->
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="Your full name"
+            required
+          />
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Create a strong password"
+            required
+          />
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-primary">
+          Create Account
+        </button>
       </form>
 
-      <p>Already have an account? <a href="/login">Login</a></p>
+      <!-- Switch -->
+      <p class="auth-switch">
+        Already have an account?
+        <a href="/login">Login</a>
+      </p>
     </section>
+
   </main>
 
+  <!-- Footer -->
   <%- include("../partials/footer") %>
 
 </body>

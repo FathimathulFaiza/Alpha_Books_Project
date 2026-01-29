@@ -1,37 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>User Login | Alpha Books</title>
-  <link rel="stylesheet" href="/public/css/style.css">
+  <meta charset="UTF-8" />
+  <title>Login | Alpha Books</title>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/public/css/style.css" />
 </head>
 
-<body>
+<body class="auth-page">
 
+  <!-- Header -->
   <%- include("../partials/header") %>
 
+  <!-- LOGIN CONTAINER -->
   <main class="auth-container">
+
+    <!-- LEFT SIDE (Brand / Info) -->
     <section class="auth-left">
-      <!-- Image will come later -->
-      <h2>Welcome Back</h2>
-      <p>Login to your Alpha Books account</p>
+      <h1>Welcome Back 👋</h1>
+      <p>
+        Login to your Alpha Books account and continue exploring
+        your favorite books.
+      </p>
     </section>
 
+    <!-- RIGHT SIDE (FORM) -->
     <section class="auth-right">
-      <h1>Login</h1>
+      <h2>Login</h2>
 
-      <form>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
+      <form method="POST" action="/login" class="auth-form">
 
-        <a href="#">Forgot Password?</a>
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
 
-        <button type="submit">Login</button>
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="form-extra">
+          <a href="/forgot-password">Forgot password?</a>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-primary">
+          Login
+        </button>
       </form>
 
-      <p>Don’t have an account? <a href="/signup">Sign Up</a></p>
+      <!-- Signup Link -->
+      <p class="auth-switch">
+        Don’t have an account?
+        <a href="/signup">Sign up</a>
+      </p>
     </section>
+
   </main>
 
+  <!-- Footer -->
   <%- include("../partials/footer") %>
 
 </body>

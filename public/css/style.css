@@ -302,3 +302,150 @@ footer p {
 .btn.secondary:hover {
   background: #d1d5db;
 }
+
+
+/* ===============================
+   AUTH PAGES (LOGIN / SIGNUP)
+================================ */
+
+.auth-page {
+  background: #f3f4f6;
+  min-height: 100vh;
+}
+
+/* Layout */
+.auth-container {
+  max-width: 1000px;
+  margin: 60px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* LEFT PANEL */
+.auth-left {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-left h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.auth-left p {
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+/* RIGHT PANEL */
+.auth-right {
+  padding: 50px 40px;
+}
+
+.auth-right h2 {
+  font-size: 26px;
+  margin-bottom: 25px;
+  color: #111827;
+}
+
+/* FORM */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+.form-group input {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #2563eb;
+}
+
+/* Extra Links */
+.form-extra {
+  text-align: right;
+}
+
+.form-extra a {
+  font-size: 13px;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.form-extra a:hover {
+  text-decoration: underline;
+}
+
+/* BUTTON */
+.btn-primary {
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+/* Switch link */
+.auth-switch {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.auth-switch a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .auth-container {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-left {
+    text-align: center;
+  }
+}
+
+.auth-form button {
+  margin-top: 10px;
+}
