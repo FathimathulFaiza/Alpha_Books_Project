@@ -1,0 +1,63 @@
+/* അഡ്മിൻ പേജിന്റെ മൊത്തത്തിലുള്ള ഡിസൈൻ */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7fe; /* ലൈറ്റ് ബാക്ക്ഗ്രൗണ്ട് */
+}
+
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* സൈഡ്ബാർ ഡിസൈൻ */
+.sidebar {
+    width: 260px;
+    background-color: #111c44; /* ഡാർക്ക് ബ്ലൂ */
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.sidebar ul li:hover {
+    background-color: #1b254b;
+}
+
+.sidebar ul li a {
+    color: #a3adcc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.sidebar ul li a:hover {
+    color: white;
+}
+
+/* മെയിൻ കണ്ടന്റ് ഏരിയ */
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+.main-content h1 {
+    color: #2b3674;
+    font-size: 34px;
+    margin-bottom: 10px;
+}

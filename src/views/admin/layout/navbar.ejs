@@ -1,0 +1,55 @@
+
+<div class="top-navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background-color: #ffffff; border-bottom: 1px solid #eef2f5; width: 100%; box-sizing: border-box;">
+    
+    <div class="page-title">
+        <% if (typeof path !== 'undefined' && path.includes('users')) { %>
+            <h2 style="margin: 0; font-size: 22px; font-weight: 600; color: #1a1a1a;">Users</h2>
+        <% } else if (typeof title !== 'undefined' && title === 'Users') { %>
+            <h2 style="margin: 0; font-size: 22px; font-weight: 600; color: #1a1a1a;">Users</h2>
+        <% } else { %>
+            <h2 style="margin: 0; font-size: 22px; font-weight: 600; color: #1a1a1a;">Dashboard</h2>
+        <% } %>
+    </div>
+
+    <div class="search-section" style="flex-grow: 0.5; max-width: 500px;">
+        <% if ((typeof path !== 'undefined' && path.includes('users')) || (typeof title !== 'undefined' && title === 'Users')) { %>
+            <form action="/admin/users" method="GET" style="display: flex; align-items: center; background-color: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px 12px; width: 100%; margin: 0;">
+                <input type="text" 
+                       name="search" 
+                       value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>" 
+                       placeholder="Search users by name or email..." 
+                       style="border: none; background: transparent; width: 100%; outline: none; font-size: 14px; color: #4a5568;">
+
+                <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+                    <a href="/admin/users" style="color: #a0aec0; text-decoration: none; margin-right: 10px; font-size: 14px;">✕</a>
+                <% } %>
+                
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: #4a5568;">
+                    🔍
+                </button>
+            </form>
+        <% } else { %>
+            <div style="width: 100%;"></div>
+        <% } %>
+    </div>
+
+    <div class="admin-profile-section" style="display: flex; align-items: center; gap: 20px;">
+        <div class="notification-icon" style="position: relative; cursor: pointer; font-size: 18px;">
+            🔔
+            <span style="position: absolute; top: -5px; right: -5px; background-color: #e63946; color: white; border-radius: 50%; padding: 2px 5px; font-size: 10px; font-weight: bold;">3</span>
+        </div>
+        
+        <div style="width: 1px; height: 25px; background-color: #e2e8f0;"></div>
+
+        <div class="profile-details" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background-color: #6a5acd; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; overflow: hidden;">
+                A
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <span style="font-size: 14px; font-weight: 500; color: #2d3748;">Admin</span>
+                <span style="font-size: 11px; color: #718096;">Manager</span>
+            </div>
+        </div>
+    </div>
+
+</div>

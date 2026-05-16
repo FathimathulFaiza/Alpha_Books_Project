@@ -1,5 +1,103 @@
+<%- include('./layout/header.ejs') %>
 
-<%- include("layout", { body: `
-  <h1>Users</h1>
-  <p>Admin can manage users here</p>
-` }) %>
+<link rel="stylesheet" href="/css/admin/users.css">
+
+<div class="dashboard-container" style="display: flex;">
+    
+    <%- include('./layout/sidebar.ejs') %>
+
+    <main class="main-content" style="flex: 1; padding: 30px; box-sizing: border-box;">
+        
+        <%- include('layout/navbar', { title: 'Users' }) %>
+
+        <div class="table-container" style="margin-top: 20px;">
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Sl.No</th> 
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th> 
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% if(users.length > 0) { %>
+                    <% users.forEach((user, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= user.firstName %> <%= user.lastName %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.phone ? user.phone : 'N/A' %></td>
+                            
+                            <td>
+                                <% if (user.isBlocked) { %>
+                                    <span class="status-badge" style="background-color: #ffebee; color: #c62828; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;">Blocked</span>
+                                <% } else { %>
+                                    <span class="status-badge" style="background-color: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;">Active</span>
+                                <% } %>
+                            </td>
+                            
+                            <td>
+                                <% if (user.isBlocked) { %>
+                                    <a href="/admin/users/toggle-block/<%= user._id %>" 
+                                       onclick="return confirm('Are you sure you want to unblock this user?')" 
+                                       style="background-color: #2ec4b6; color: white; text-decoration: none; padding: 6px 15px; border-radius: 6px; font-size: 13px; font-weight: 500; display: inline-block;">
+                                       Unblock
+                                    </a>
+                                <% } else { %>
+                                    <a href="/admin/users/toggle-block/<%= user._id %>" 
+                                       onclick="return confirm('Are you sure you want to block this user?')" 
+                                       style="background-color: #e63946; color: white; text-decoration: none; padding: 6px 15px; border-radius: 6px; font-size: 13px; font-weight: 500; display: inline-block;">
+                                       Block
+                                    </a>
+                                <% } %>
+                                
+                                <a href="/admin/users/edit/<%= user._id %>" style="background-color: #6a5acd; color: white; text-decoration: none; padding: 6px 15px; border-radius: 6px; font-size: 13px; font-weight: 500; display: inline-block; margin-left: 5px;">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="6" style="text-align: center;">No users found!</td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+
+        <% if (totalPages > 1) { %>
+    <div class="pagination-container" style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 25px; padding-bottom: 25px;">
+        
+        <% if (currentPage > 1) { %>
+            <a href="/admin/users?page=<%= currentPage - 1 %>&search=<%= searchQuery %>" 
+               style="padding: 8px 14px; background-color: #f1f5f9; border-radius: 6px; text-decoration: none; color: #334155; font-size: 14px; font-weight: 500; border: 1px solid #e2e8f0;">
+               Previous
+            </a>
+        <% } %>
+
+        <% for(let i = 1; i <= totalPages; i++) { %>
+            <a href="/admin/users?page=<%= i %>&search=<%= searchQuery %>" 
+               style="padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 600; border: 1px solid #e2e8f0;
+                      <%= i === currentPage ? 'background-color: #6a5acd; color: white; border-color: #6a5acd;' : 'background-color: #ffffff; color: #334155;' %>">
+                <%= i %>
+            </a>
+        <% } %>
+
+        <% if (currentPage < totalPages) { %>
+            <a href="/admin/users?page=<%= currentPage + 1 %>&search=<%= searchQuery %>" 
+               style="padding: 8px 14px; background-color: #f1f5f9; border-radius: 6px; text-decoration: none; color: #334155; font-size: 14px; font-weight: 500; border: 1px solid #e2e8f0;">
+               Next
+            </a>
+        <% } %>
+
+    </div>
+<% } %>
+
+    </main>
+</div>
+
+<%- include('./layout/footer.ejs') %>

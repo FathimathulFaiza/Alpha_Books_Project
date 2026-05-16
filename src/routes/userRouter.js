@@ -3,19 +3,41 @@ import express from "express"
 import mongoose from "mongoose";
 import Category from "../models/categoryModel.js";
 import Product from "../models/productModel.js"
+import bcrypt from "bcrypt";
+import User from "../models/userModel.js";
 
 const router = express.Router()
 
 
 // Home
 router.get("/", (req, res) => {
+
   res.render("user/home");
 });
 
 // Auth
 router.get("/login", (req, res) => {
+
   res.render("user/login");
 });
+
+// login - post
+
+router.post("/login",async(req,res)=>{
+
+  const {email, password} = req.body
+
+  console.log("email : ",email,"password : ",password)
+
+  const user = await User.findOne({email})    // find user saved in db
+  if(!user){
+    
+    console.log("User not find..!")
+     return res.send("Invalid email or Password..")
+  }
+ 
+  res.send("User found..user")
+})
 
 router.get("/signup", (req, res) => {
   res.render("user/signup");

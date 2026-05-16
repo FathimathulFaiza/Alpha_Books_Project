@@ -1,4 +1,150 @@
-<%- include("layout", { body: `
-  <h1>Admin Dashboard</h1>
-  <p>Orders | Users | Products summary will appear here</p>
-` }) %>
+
+<%- include('./layout/header.ejs') %>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+<div class="admin-wrapper" style="display: flex; font-family: 'DM Sans', sans-serif; background-color: #f4f7fe; min-height: 100vh;">
+    
+    <%- include('./layout/sidebar.ejs') %>
+    
+    <div class="main-content" style="flex: 1; padding: 30px; background-color: #f4f7fe; box-sizing: border-box;">
+        
+        <%- include('./layout/navbar.ejs') %>
+        
+        <div class="dashboard-body" style="margin-top: 10px;">
+            
+            <h2 style="color: #2b3674; font-size: 24px; font-weight: 700; margin-bottom: 20px;">Today's Performance</h2>
+            
+            <div class="stats-container" style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px;">
+                <div class="card" style="background: white; padding: 20px; border-radius: 15px; flex: 1; min-width: 180px; box-shadow: 0 4px 20px rgba(0,0,0,0.01); display: flex; align-items: center; gap: 15px;">
+                    <div class="icon-box" style="background-color: #ffe8ec; color: #ff5b79; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                    </div>
+                    <div>
+                        <h5 style="color: #a3adcc; margin: 0; font-size: 14px; font-weight: 500;">Total Sales</h5>
+                        <h3 style="color: #2b3674; margin: 2px 0; font-size: 22px; font-weight: 700;">₹ 70k</h3>
+                        <span style="color: #ff5b79; font-size: 11px; font-weight: 600;"><i class="fa-solid fa-arrow-down"></i> -8% than yesterday</span>
+                    </div>
+                </div>
+
+                <div class="card" style="background: white; padding: 20px; border-radius: 15px; flex: 1; min-width: 180px; box-shadow: 0 4px 20px rgba(0,0,0,0.01); display: flex; align-items: center; gap: 15px;">
+                    <div class="icon-box" style="background-color: #fff4d6; color: #ffbc1f; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                        <i class="fa-solid fa-box"></i>
+                    </div>
+                    <div>
+                        <h5 style="color: #a3adcc; margin: 0; font-size: 14px; font-weight: 500;">Total Orders</h5>
+                        <h3 style="color: #2b3674; margin: 2px 0; font-size: 22px; font-weight: 700;">300</h3>
+                        <span style="color: #ffbc1f; font-size: 11px; font-weight: 600;"><i class="fa-solid fa-arrow-up"></i> +5% than yesterday</span>
+                    </div>
+                </div>
+
+                <div class="card" style="background: white; padding: 20px; border-radius: 15px; flex: 1; min-width: 180px; box-shadow: 0 4px 20px rgba(0,0,0,0.01); display: flex; align-items: center; gap: 15px;">
+                    <div class="icon-box" style="background-color: #e2fbd7; color: #34b53a; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+                    <div>
+                        <h5 style="color: #a3adcc; margin: 0; font-size: 14px; font-weight: 500;">Products Sold</h5>
+                        <h3 style="color: #2b3674; margin: 2px 0; font-size: 22px; font-weight: 700;">50</h3>
+                        <span style="color: #34b53a; font-size: 11px; font-weight: 600;"><i class="fa-solid fa-arrow-up"></i> +12% than yesterday</span>
+                    </div>
+                </div>
+
+                <div class="card" style="background: white; padding: 20px; border-radius: 15px; flex: 1; min-width: 180px; box-shadow: 0 4px 20px rgba(0,0,0,0.01); display: flex; align-items: center; gap: 15px;">
+                    <div class="icon-box" style="background-color: #f3e8ff; color: #963dff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div>
+                        <h5 style="color: #a3adcc; margin: 0; font-size: 14px; font-weight: 500;">New Customer</h5>
+                        <h3 style="color: #2b3674; margin: 2px 0; font-size: 22px; font-weight: 700;">15</h3>
+                        <span style="color: #963dff; font-size: 11px; font-weight: 600;"><i class="fa-solid fa-arrow-up"></i> +8% than yesterday</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="middle-row" style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;">
+                <div class="chart-card-left" style="background: white; padding: 25px; border-radius: 20px; flex: 1.2; min-width: 350px; box-shadow: 0 4px 20px rgba(0,0,0,0.01);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h4 style="color: #2b3674; margin: 0; font-size: 16px; font-weight: 700;">Genre & Insights</h4>
+                        <i class="fa-solid fa-ellipsis" style="color: #a3adcc; cursor: pointer;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-around; align-items: center; height: 180px;">
+                        <div style="text-align: center;">
+                            <div style="width: 80px; height: 80px; border-radius: 50%; border: 8px solid #ff5b79; border-top-color: #f4f7fe; display: flex; align-items: center; justify-content: center; color: #2b3674; font-weight: 700; font-size: 14px; margin-bottom: 10px;">81%</div>
+                            <span style="color: #a3adcc; font-size: 12px; font-weight: 500;">Genre</span>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 80px; height: 80px; border-radius: 50%; border: 8px solid #34b53a; border-left-color: #f4f7fe; display: flex; align-items: center; justify-content: center; color: #2b3674; font-weight: 700; font-size: 14px; margin-bottom: 10px;">22%</div>
+                            <span style="color: #a3adcc; font-size: 12px; font-weight: 500;">Author</span>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 80px; height: 80px; border-radius: 50%; border: 8px solid #3b71fe; border-bottom-color: #f4f7fe; display: flex; align-items: center; justify-content: center; color: #2b3674; font-weight: 700; font-size: 14px; margin-bottom: 10px;">62%</div>
+                            <span style="color: #a3adcc; font-size: 12px; font-weight: 500;">Popularity</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card-right" style="background: white; padding: 25px; border-radius: 20px; flex: 1.8; min-width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.01);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h4 style="color: #2b3674; margin: 0; font-size: 16px; font-weight: 700;">Books Sold this Week</h4>
+                        <button style="background: #f4f7fe; color: #3b71fe; border: none; padding: 6px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer;"><i class="fa-solid fa-download"></i> Save Report</button>
+                    </div>
+                    <div style="height: 180px; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 10px; border-bottom: 1px dashed #e0e0e0; position: relative;">
+                        <div style="position: absolute; top: 30%; left: 40%; background: #2b3674; color: white; padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">450 Orders <br><span style="font-weight:400; font-size:9px; color:#a3adcc;">Oct 15th, 2025</span></div>
+                        <div style="height: 20%; width: 100%; border-top: 2px solid #3b71fe; position: absolute; bottom: 30%; left: 0; filter: drop-shadow(0px 4px 8px rgba(59,113,254,0.3));"></div>
+                        <span style="color: #a3adcc; font-size: 11px;">Sun</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Mon</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Tue</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Wed</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Thu</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Fri</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Sat</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-row" style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div class="bottom-card-left" style="background: white; padding: 25px; border-radius: 20px; flex: 2; min-width: 450px; box-shadow: 0 4px 20px rgba(0,0,0,0.01);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                        <div>
+                            <span style="color: #a3adcc; font-size: 12px; font-weight: 500;">Current vs Predicted</span>
+                            <h4 style="color: #2b3674; margin: 2px 0 0 0; font-size: 18px; font-weight: 700;">Book Sales</h4>
+                        </div>
+                        <div style="display: flex; gap: 15px; font-size: 12px; flex-wrap: wrap;">
+                            <span style="color: #3b71fe; font-weight: 500;"><i class="fa-solid fa-circle" style="font-size: 8px;"></i> Predicted Book Sales</span>
+                            <span style="color: #ff5b79; font-weight: 500;"><i class="fa-solid fa-circle" style="font-size: 8px;"></i> Current Book Sales</span>
+                        </div>
+                    </div>
+                    <div style="height: 160px; border-left: 1px dashed #e0e0e0; border-bottom: 1px dashed #e0e0e0; display: flex; justify-content: space-between; align-items: flex-end; padding: 10px;">
+                        <span style="color: #a3adcc; font-size: 11px;">Jan</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Feb</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Mar</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Apr</span>
+                        <span style="color: #a3adcc; font-size: 11px;">May</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Jun</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Jul</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Aug</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Sept</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Oct</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Nov</span>
+                        <span style="color: #a3adcc; font-size: 11px;">Dec</span>
+                    </div>
+                </div>
+
+                <div class="bottom-card-right" style="background: white; padding: 25px; border-radius: 20px; flex: 1; min-width: 250px; box-shadow: 0 4px 20px rgba(0,0,0,0.01);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h4 style="color: #2b3674; margin: 0; font-size: 16px; font-weight: 700;">Sales Map</h4>
+                        <select style="border: 1px solid #e0e0e0; padding: 5px 10px; border-radius: 8px; color: #a3adcc; font-size: 12px; outline: none;"><option>Monthly</option></select>
+                    </div>
+                    <div style="height: 160px; display: flex; align-items: flex-end; justify-content: space-around; padding-bottom: 5px;">
+                        <div style="width: 12px; height: 40%; background: #ffbc1f; border-radius: 4px;"></div>
+                        <div style="width: 12px; height: 75%; background: #3b71fe; border-radius: 4px;"></div>
+                        <div style="width: 12px; height: 50%; background: #3b71fe; border-radius: 4px;"></div>
+                        <div style="width: 12px; height: 90%; background: #3b71fe; border-radius: 4px;"></div>
+                        <div style="width: 12px; height: 65%; background: #ff5b79; border-radius: 4px;"></div>
+                        <div style="width: 12px; height: 85%; background: #3b71fe; border-radius: 4px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div> </div> </div> <%- include('./layout/footer.ejs') %>

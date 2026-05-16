@@ -1,0 +1,75 @@
+
+/* അഡ്മിൻ യൂസർ ടേബിളിന് വേണ്ടിയുള്ള സ്റ്റൈലുകൾ */
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h2 {
+    font-size: 24px;
+    color: #111c44;
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    color: #a3adcc;
+    margin: 0;
+}
+
+.table-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.user-table th {
+    padding: 12px;
+    color: #2b3674;
+    font-weight: bold;
+    border-bottom: 2px solid #e0e5f2;
+}
+
+.user-table td {
+    padding: 14px 12px;
+    color: #2b3674;
+    border-bottom: 1px solid #e0e5f2;
+}
+
+.status-badge {
+    background-color: #e6f4ea;
+    color: #137333;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.block-btn {
+    background-color: #d93025;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.block-btn:hover {
+    background-color: #b31b12;
+}

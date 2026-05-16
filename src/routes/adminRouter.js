@@ -2,100 +2,29 @@
 import express from "express"
 import Category from "../models/categoryModel.js"
 import Product from "../models/productModel.js"
+import adminController from "../controllers/adminController.js"
+import * as auth from '../middlewares/adminAuth.js'
 
-const router = express.Router()
+const adminRouter = express.Router()
 
 
 // routes
 
-router.get("/login",(req,res)=>{
-    res.render("admin/login")
-})
 
-router.post("/login",(req,res)=>{
-    
-    const {email,password} = req.body
+adminRouter.post('/login',adminController.verifyLogin)
 
-    console.log("Admin Login Attempt")
-    console.log("email : ",email)
-    console.log("Password : ", password)
+adminRouter.get('/create_admin',adminController.createAdmin)
 
-    if(email === "admin@gmail.com" && password === "admin123"){
-        req.session.isAdmin = true
-        return res.redirect("/admin/dashboard")
-    }
+adminRouter.get('/dashboard',auth.isLogin,adminController.loadDashboard)   // show 'dashboard' only if logged in
 
-    res.redirect("/admin/dashboard")
-})
+adminRouter.get('/login',auth.isLogout,adminController.loadLogin)  // do not show login page if already logged in
 
-router.get("/dashboard",(req,res)=>{
-    res.render("admin/dashboard")
-})
+adminRouter.get('/users',auth.isLogin,adminController.loadUsers)    // show the users list
 
-router.get("/products",(req,res)=>{
-    res.render("admin/products")
-})
+adminRouter.get('/users/toggle-block/:id', adminController.toggleBlockUser)   // block or unblock the user
 
-router.get("/orders",(req,res)=>{
-    res.render("admin/orders")
-})
+adminRouter.get('/logout',auth.isLogin,adminController.logout)
 
 
-router.get("/users",(req,res)=>{
-    res.render("admin/users")
-})
 
-router.get("/categories", async(req,res)=>{
-
-    const categories = await Category.find()
-
-    res.render("admin/categories", {categories})
-})
-
-router.post("/categories", async(req,res)=>{
-
-    const {name, description} = req.body
-
-    const existingCategory = await Category.findOne({name})
-
-    if(existingCategory){
-        return res.redirect("/admin/categories")
-    }
-
-    await Category.create({
-        name,
-        description
-    })
-        res.redirect("/admin/categories")
-})
-
-
-router.post("/categories/toggle/:id",async(req,res)=>{
-    const categoryId = req.params.id
-
-    const category = await Category.findById(categoryId)
-
-    category.isActive = !category.isActive
-
-    await category.save()
-
-        res.redirect("/admin/categories")
-    
-})
-
-router.get("/test-product", async (req, res) => {
-  await Product.create({
-    title: "Atomic Habits",
-    author: "James Clear",
-    description: "A book about building good habits",
-    price: 499,
-    category: "6977a671b10307f65a463931", // book category ID
-    stock: 10,
-    images: ["test.jpg"]
-  });
-
-  res.send("Product created");
-});
-
-
-export default router
+export default adminRouter

@@ -1,21 +1,36 @@
-<%- include("layout", { body: `
-  <h2>Admin Login</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <p>Please enter your details to access the dashboard.</p>
+            
+            <form action="/admin/login" method="POST">
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="••••••••" required>
+                </div>
 
-  <form method="POST" action="/admin/login">
-    <div>
-      <label>Email</label><br/>
-      <input type="email" name="email" placeholder="Enter admin email" required />
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            
+            <% if(typeof message !== 'undefined') { %>
+                <p class="error-msg" style="color: red; margin-top: 10px;"><%= message %></p>
+            <% } %>
+        </div>
     </div>
-
-    <br/>
-
-    <div>
-      <label>Password</label><br/>
-      <input type="password" name="password" placeholder="Enter password" required />
-    </div>
-
-    <br/>
-
-    <button type="submit">Login</button>
-  </form>
-` }) %>
+</body>
+</html>
