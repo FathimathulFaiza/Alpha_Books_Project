@@ -1,36 +1,126 @@
-<ul>
-  <% categories.forEach(cat => { %>
-    <li>
-      <strong><%= cat.name %></strong><br>
-      <small><%= cat.description %></small><br>
+<%- include('./layout/header.ejs') %>
 
-      <!-- Soft delete button -->
-      <form action="/admin/categories/toggle/<%= cat._id %>" method="POST">
-        <button type="submit">
-          <%= cat.isActive ? "Disable" : "Enable" %>
-        </button>
-      </form>
+<div class="dashboard-container" style="display: flex;">
+    
+    <%- include('./layout/sidebar.ejs') %>
 
-    </li>
-  <% }) %>
-</ul>
-<form action="/admin/categories" method="POST">
+    <main class="main-content" style="flex: 1; padding: 30px; box-sizing: border-box; font-family: sans-serif;">
+        
+        <%- include('layout/navbar', { title: 'Category' }) %>
+        
+        <div class="form-container" style="background-color: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 20px;">
+            <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #1e293b;">Add Category</h2>
+            
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div style="background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; font-weight: 500;">
+                    ⚠️ <%= error %>
+                </div>
+            <% } %>
+            
+            <form action="/admin/category/add" method="POST" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+                
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label style="font-size: 14px; font-weight: 500; min-width: 130px;">Category Name :</label>
+                        <input type="text" name="name" id="categoryName" placeholder="Enter Category Name" required style="flex: 1; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label style="font-size: 14px; font-weight: 500; min-width: 130px;">Category Slug(URL) :</label>
+                        <input type="text" name="slug" id="categorySlug" placeholder="slug (auto-generated)" readonly style="flex: 1; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background-color: #f8fafc; color: #94a3b8;">
+                    </div>
+                    <span style="font-size: 12px; color: #64748b; margin-left: 140px; margin-top: -10px;">Example : fiction, drama, science</span>
+                </div>
 
-  <label>Category Name</label><br>
-  <input 
-    type="text" 
-    name="name" 
-    placeholder="Enter category name"
-    required
-  ><br><br>
+                <div style="display: flex; flex-direction: column; gap: 15px; height: 100%; justify-content: space-between;">
+                    <div style="display: flex; align-items: flex-start; gap: 10px;">
+                        <label style="font-size: 14px; font-weight: 500; min-width: 140px; margin-top: 8px;">Category Description :</label>
+                        <textarea name="description" placeholder="Enter Category Description" required style="flex: 1; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; min-height: 80px; resize: vertical;"></textarea>
+                    </div>
+                    
+                    <div style="text-align: right; width: 100%;">
+                        <button type="submit" style="background-color: #fa5252; color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer;">Add Category</button>
+                    </div>
+                </div>
 
-  <label>Description</label><br>
-  <textarea 
-    name="description" 
-    placeholder="Enter category description"
-    required
-  ></textarea><br><br>
+            </form>
+        </div>
 
-  <button type="submit">Add Category</button>
+        <h2 style="font-size: 18px; font-weight: bold; margin-top: 40px; margin-bottom: 20px; color: #1e293b;">Categories</h2>
 
-</form>
+        <div class="table-container" style="background-color: #ffffff; border-radius: 8px; border: 1px solid #cbd5e1; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+                <thead>
+                    <tr style="background-color: #e2e8f0; color: #334155; font-weight: 600;">
+                        <th style="padding: 12px 20px;">S.No</th>
+                        <th style="padding: 12px 20px;">Category Name</th>
+                        <th style="padding: 12px 20px;">Description</th>
+                        <th style="padding: 12px 20px; text-align: center;">Listed/ Unlisted</th>
+                        <th style="padding: 12px 20px; text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% if(categories.length > 0) { %>
+                    <% categories.forEach((category, index) => { %>
+                        <tr style="border-bottom: 1px solid #e2e8f0; color: #475569;">
+                            <td style="padding: 14px 20px;"><%= index + 1 %></td>
+                            <td style="padding: 14px 20px; font-weight: 500; color: #1e293b;"><%= category.name %></td>
+                            <td style="padding: 14px 20px; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%= category.description %></td>
+                            
+                            <td style="padding: 14px 20px; text-align: center;">
+                                <a href="/admin/category/toggle-list/<%= category._id %>" style="text-decoration: none;">
+                                    <% if (category.isListed) { %>
+                                        <span style="display: inline-flex; align-items: center; justify-content: flex-end; width: 45px; height: 22px; background-color: #1e293b; border-radius: 20px; padding: 2px; cursor: pointer; transition: 0.3s;">
+                                            <span style="width: 18px; height: 18px; background-color: #ffffff; border-radius: 50%;"></span>
+                                        </span>
+                                    <% } else { %>
+                                        <span style="display: inline-flex; align-items: center; justify-content: flex-start; width: 45px; height: 22px; background-color: #cbd5e1; border-radius: 20px; padding: 2px; cursor: pointer; transition: 0.3s;">
+                                            <span style="width: 18px; height: 18px; background-color: #ffffff; border-radius: 50%;"></span>
+                                        </span>
+                                    <% } %>
+                                </a>
+                            </td>
+                            
+                            <td style="padding: 14px 20px; text-align: center;">
+                                <a href="/admin/category/edit/<%= category._id %>" style="display: inline-block; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc; text-decoration: none; font-size: 16px; margin-right: 5px;" title="Edit">
+                                    📝
+                                </a>
+                                <a href="/admin/category/delete/<%= category._id %>" onclick="return confirm('Are you sure you want to delete this category?')" style="display: inline-block; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc; color: #fa5252; text-decoration: none; font-size: 16px;" title="Delete">
+                                    🗑️
+                                </a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px; color: #94a3b8;">No categories found!</td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    const nameInput = document.getElementById('categoryName');
+    const slugInput = document.getElementById('categorySlug');
+
+    if (nameInput && slugInput) {
+        nameInput.addEventListener('input', function() {
+            const nameValue = nameInput.value;
+            
+            const generatedSlug = nameValue
+                .toLowerCase()                       
+                .trim()                              
+                .replace(/[^a-z0-9 -]/g, '')         
+                .replace(/\s+/g, '-')                
+                .replace(/-+/g, '-');                
+
+            slugInput.value = generatedSlug;
+        });
+    }
+</script>
+
+<%- include('./layout/footer.ejs') %>

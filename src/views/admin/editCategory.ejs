@@ -1,0 +1,38 @@
+<%- include('layout/navbar', { title: 'Edit Category' }) %>
+
+<div style="padding: 30px; background-color: #f8f9fa; min-height: 100vh;">
+    <div style="max-width: 600px; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin: 0 auto;">
+        
+        <h2 style="margin-top: 0; margin-bottom: 20px; color: #1a1a1a; font-size: 22px;">Edit Category</h2>
+        
+        <% if(error) { %>
+            <div style="background-color: #fee2e2; color: #dc2626; padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 14px;">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <form action="/admin/category/edit/<%= category._id %>" method="POST">
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #4a5568;">Category Name :</label>
+                <input type="text" name="name" value="<%= category.name %>" required
+                       style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; outline: none;">
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #4a5568;">Category Description :</label>
+                <textarea name="description" rows="4" required
+                          style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; outline: none; resize: vertical;"><%= category.description %></textarea>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" style="background-color: #ff4d4d; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+                    Update Category
+                </button>
+                <a href="/admin/category" style="background-color: #edf2f7; color: #4a5568; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 500; display: inline-block;">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+
 <%- include('./layout/header.ejs') %>
 
 <link rel="stylesheet" href="/css/admin/users.css">
@@ -70,32 +71,38 @@
         </div>
 
         <% if (totalPages > 1) { %>
-    <div class="pagination-container" style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 25px; padding-bottom: 25px;">
-        
-        <% if (currentPage > 1) { %>
-            <a href="/admin/users?page=<%= currentPage - 1 %>&search=<%= searchQuery %>" 
-               style="padding: 8px 14px; background-color: #f1f5f9; border-radius: 6px; text-decoration: none; color: #334155; font-size: 14px; font-weight: 500; border: 1px solid #e2e8f0;">
-               Previous
-            </a>
-        <% } %>
+            <div class="pagination-container" style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 25px; padding-bottom: 25px;">
+                
+                <% if (currentPage > 1) { %>
+                    <a href="/admin/users?page=<%= currentPage - 1 %>&search=<%= searchQuery %>" 
+                       style="padding: 8px 14px; background-color: #f1f5f9; border-radius: 6px; text-decoration: none; color: #334155; font-size: 14px; font-weight: 500; border: 1px solid #e2e8f0;">
+                       Previous
+                    </a>
+                <% } %>
 
-        <% for(let i = 1; i <= totalPages; i++) { %>
-            <a href="/admin/users?page=<%= i %>&search=<%= searchQuery %>" 
-               style="padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 600; border: 1px solid #e2e8f0;
-                      <%= i === currentPage ? 'background-color: #6a5acd; color: white; border-color: #6a5acd;' : 'background-color: #ffffff; color: #334155;' %>">
-                <%= i %>
-            </a>
-        <% } %>
+                <% for(let i = 1; i <= totalPages; i++) { %>
+                    <% if (i === currentPage) { %>
+                        <a href="/admin/users?page=<%= i %>&search=<%= searchQuery %>" 
+                           style="padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 600; border: 1px solid #6a5acd; background-color: #6a5acd; color: white;">
+                            <%= i %>
+                        </a>
+                    <% } else { %>
+                        <a href="/admin/users?page=<%= i %>&search=<%= searchQuery %>" 
+                           style="padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 600; border: 1px solid #e2e8f0; background-color: #ffffff; color: #334155;">
+                            <%= i %>
+                        </a>
+                    <% } %>
+                <% } %>
 
-        <% if (currentPage < totalPages) { %>
-            <a href="/admin/users?page=<%= currentPage + 1 %>&search=<%= searchQuery %>" 
-               style="padding: 8px 14px; background-color: #f1f5f9; border-radius: 6px; text-decoration: none; color: #334155; font-size: 14px; font-weight: 500; border: 1px solid #e2e8f0;">
-               Next
-            </a>
-        <% } %>
+                <% if (currentPage < totalPages) { %>
+                    <a href="/admin/users?page=<%= currentPage + 1 %>&search=<%= searchQuery %>" 
+                       style="padding: 8px 14px; background-color: #f1f5f9; border-radius: 6px; text-decoration: none; color: #334155; font-size: 14px; font-weight: 500; border: 1px solid #e2e8f0;">
+                       Next
+                    </a>
+                <% } %>
 
-    </div>
-<% } %>
+            </div>
+        <% } %>
 
     </main>
 </div>

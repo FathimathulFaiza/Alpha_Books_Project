@@ -23,8 +23,22 @@ adminRouter.get('/users',auth.isLogin,adminController.loadUsers)    // show the 
 
 adminRouter.get('/users/toggle-block/:id', adminController.toggleBlockUser)   // block or unblock the user
 
+adminRouter.get('/category', auth.isLogin,adminController.getCategoryPage)  // list the category pages 
+
+adminRouter.post('/category/add',auth.isLogin,adminController.addCategory)   // add category
+
+adminRouter.get('/category/toggle-list/:id',auth.isLogin,adminController.toggleCategoryList) // toggele -> list/unList 
+
+adminRouter.get('/category/edit/:id',auth.isLogin,adminController.loadEditCategory)   // get edit category page
+
+adminRouter.post('/category/edit/:id',auth.isLogin,adminController.editCategory)   // update the edit category
+
+
+
+
 adminRouter.get('/logout',auth.isLogin,adminController.logout)
 
-
-
 export default adminRouter
+
+
+// auth.isLogin -> middleware to authenticate the admin , only admin can view

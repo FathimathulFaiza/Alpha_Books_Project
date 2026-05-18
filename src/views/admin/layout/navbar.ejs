@@ -1,10 +1,9 @@
-
 <div class="top-navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background-color: #ffffff; border-bottom: 1px solid #eef2f5; width: 100%; box-sizing: border-box;">
     
     <div class="page-title">
-        <% if (typeof path !== 'undefined' && path.includes('users')) { %>
-            <h2 style="margin: 0; font-size: 22px; font-weight: 600; color: #1a1a1a;">Users</h2>
-        <% } else if (typeof title !== 'undefined' && title === 'Users') { %>
+        <% if (typeof title !== 'undefined' && title) { %>
+            <h2 style="margin: 0; font-size: 22px; font-weight: 600; color: #1a1a1a;"><%= title %></h2>
+        <% } else if (typeof path !== 'undefined' && path.includes('users')) { %>
             <h2 style="margin: 0; font-size: 22px; font-weight: 600; color: #1a1a1a;">Users</h2>
         <% } else { %>
             <h2 style="margin: 0; font-size: 22px; font-weight: 600; color: #1a1a1a;">Dashboard</h2>
