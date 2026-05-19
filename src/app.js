@@ -31,12 +31,16 @@
    }) );
 
 
+   // middleware to get the data of the user in all ejs pages
+   app.use((req,res,next)=>{
+    res.locals.user = req.session.user || null;  // if user is logged in pass data to ejs, or else set null
+    next()
+   })
+
 //  routers
 
  app.use("/",userRouter)
  app.use("/admin",adminRouter)
-
-
 
 
 export default app

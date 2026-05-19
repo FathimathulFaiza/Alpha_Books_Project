@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
         body {
             background-color: #f8f9fa;
@@ -14,24 +14,27 @@
             justify-content: center;
         }
         .otp-card {
-            max-width: 400px;
+            max-width: 450px;
             width: 100%;
             padding: 30px;
-            border-radius: 12px;
+            border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            background: white;
+            background-color: #ffffff;
         }
-        .otp-inputs input {
+        /* Custom styling for individual OTP boxes */
+        .otp-box {
             width: 45px;
             height: 50px;
-            font-size: 20px;
+            font-size: 24px;
+            font-weight: bold;
             text-align: center;
             border: 2px solid #ced4da;
             border-radius: 6px;
-            margin: 0 5px;
         }
-        .otp-inputs input:focus {
+        /* Highlight the active input box inside the UI */
+        .otp-box:focus {
             border-color: #0d6efd;
+            box-shadow: 0 0 5px rgba(13, 110, 253, 0.3);
             outline: none;
         }
     </style>
@@ -39,61 +42,96 @@
 <body>
 
 <div class="otp-card text-center">
-    <div class="brand-logo h3 text-primary fw-bold mb-3">Alpha Books</div>
-    <h4 class="fw-bold mb-2">Security Verification</h4>
-    <p class="text-muted small mb-4">We have sent a 6-digit OTP to your registered email address. It will expire in 2 minutes.</p>
-    
-    <form action="/otp-verify" method="POST" id="otpForm">
-        <div class="otp-inputs d-flex justify-content-center mb-4">
-            <input type="text" maxlength="1" class="otp-field" required pattern="\d" inputmode="numeric">
-            <input type="text" maxlength="1" class="otp-field" required pattern="\d" inputmode="numeric">
-            <input type="text" maxlength="1" class="otp-field" required pattern="\d" inputmode="numeric">
-            <input type="text" maxlength="1" class="otp-field" required pattern="\d" inputmode="numeric">
-            <input type="text" maxlength="1" class="otp-field" required pattern="\d" inputmode="numeric">
-            <input type="text" maxlength="1" class="otp-field" required pattern="\d" inputmode="numeric">
+    <h3 class="mb-3">OTP Verification</h3>
+    <p class="text-muted small">We have sent a 6-digit OTP to your registered email address.</p>
+
+    <form id="otpForm" action="/otp-verify" method="POST" class="mt-4">
+        
+        <div class="d-flex justify-content-center gap-2 mb-4">
+            <input type="text" class="form-control otp-box" maxlength="1" required pattern="\d">
+            <input type="text" class="form-control otp-box" maxlength="1" required pattern="\d">
+            <input type="text" class="form-control otp-box" maxlength="1" required pattern="\d">
+            <input type="text" class="form-control otp-box" maxlength="1" required pattern="\d">
+            <input type="text" class="form-control otp-box" maxlength="1" required pattern="\d">
+            <input type="text" class="form-control otp-box" maxlength="1" required pattern="\d">
         </div>
 
         <input type="hidden" name="otp" id="finalOtp">
-
-        <button type="submit" class="btn btn-primary w-100 mb-3">Verify & Proceed</button>
+        
+        <button type="submit" class="btn btn-primary w-100 py-2 fs-5">Verify & Register</button>
     </form>
+
+    <div class="mt-4">
+        <p id="timerText" class="text-muted">OTP will expire in: <span id="timer" class="text-danger fw-bold">02:00</span></p>
+        <a href="/resend-otp" id="resendBtn" class="btn btn-link text-primary text-decoration-none fw-bold" style="display: none;">Resend OTP</a>
+    </div>
 </div>
 
 <script>
-    const inputs = document.querySelectorAll('.otp-field');
+    const inputs = document.querySelectorAll('.otp-box');
+    const otpForm = document.getElementById('otpForm');
     const finalOtpInput = document.getElementById('finalOtp');
-    const form = document.getElementById('otpForm');
 
+    // 1. Logic for shifting focus automatically between the 6 boxes
     inputs.forEach((input, index) => {
+        // Move to the next box when user types a digit
         input.addEventListener('input', (e) => {
-            if (e.target.value.length === 1 && index < inputs.length - 1) {
+            if (input.value.length === 1 && index < inputs.length - 1) {
                 inputs[index + 1].focus();
             }
-            updateFinalOtp();
         });
 
+        // Move to the previous box when user hits the Backspace key
         input.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
+            if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
                 inputs[index - 1].focus();
             }
         });
     });
 
-    function updateFinalOtp() {
-        let otpValue = "";
-        inputs.forEach(input => {
-            otpValue += input.value;
-        });
-        finalOtpInput.value = otpValue;
-    }
-
-    form.addEventListener('submit', (e) => {
-        updateFinalOtp();
-        if (finalOtpInput.value.length !== 6) {
+    // 2. Allow user to copy a 6-digit OTP and paste it directly into the first box
+    inputs[0].addEventListener('paste', (e) => {
+        const pasteData = e.clipboardData.getData('text');
+        // Check if pasted data is exactly 6 digits long
+        if (pasteData.length === 6 && /^\d+$/.test(pasteData)) {
+            inputs.forEach((input, index) => {
+                input.value = pasteData[index];
+            });
+            inputs[5].focus(); // Automatically focus on the last box after pasting
             e.preventDefault();
-            alert("Please enter all 6 digits.");
         }
     });
+
+    // 3. Before the form submits, merge all 6 individual box digits into the hidden input
+    otpForm.addEventListener('submit', (e) => {
+        let combinedOtp = "";
+        inputs.forEach(input => {
+            combinedOtp += input.value;
+        });
+        finalOtpInput.value = combinedOtp; // Put the 6-digit string into the hidden field
+    });
+
+
+    // 4. Two-minute Countdown Timer logic
+    let timeLeft = 120; 
+    const timerElement = document.getElementById('timer');
+    const timerText = document.getElementById('timerText');
+    const resendBtn = document.getElementById('resendBtn');
+
+    const countdown = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            timerText.style.display = 'none';
+            resendBtn.style.display = 'inline-block';
+        } else {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            let formattedMinutes = minutes < 10 ? '0' : '';
+            let formattedSeconds = seconds < 10 ? '0' : '';
+            timerElement.innerHTML = `${formattedMinutes}${minutes}:${formattedSeconds}${seconds}`;
+        }
+        timeLeft -= 1;
+    }, 1000);
 </script>
 
 </body>
