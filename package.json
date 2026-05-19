@@ -13,11 +13,12 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "dotenv": "^17.2.3",
+    "dotenv": "^17.4.2",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "mongoose": "^9.1.5",
+    "nodemailer": "^8.0.7",
     "slugify": "^1.6.9"
   },
   "devDependencies": {

@@ -1,29 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Home | Alpha Books</title>
-  <link rel="stylesheet" href="/public/css/style.css">
-</head>
+<%- include('layouts/header') %>
 
-<body>
+<main style="max-width: 1200px; margin: 40px auto; padding: 0 20px; font-family: 'Inter', sans-serif; min-height: 70px; padding-bottom: 100px;">
+    
+    <div style="background: linear-gradient(135deg, #4f46e5, #fa5252); color: white; padding: 60px 40px; border-radius: 12px; text-align: center; margin-bottom: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <h2 style="font-size: 36px; margin-bottom: 15px; font-weight: 600;">Welcome to Alpha Book Store</h2>
+        <p style="font-size: 18px; opacity: 0.9; max-width: 600px; margin: 0 auto;">Discover your next great read. Explore thousands of books across fiction, tech, science, and more!</p>
+    </div>
 
-  <%- include("../partials/header") %>
+    <div style="text-align: center; margin-top: 50px; color: #64748b;">
+        <h3 style="color: #1e293b; font-size: 24px; margin-bottom: 10px;">Our Collections are coming soon...</h3>
+        <p>We are currently setting up the database to fetch the best books for you.</p>
+    </div>
 
-  <main class="home-container">
+</main>
 
-    <section class="hero-section">
-      <h1>Welcome to Alpha Books</h1>
-      <p>Discover your next favorite book</p>
-    </section>
-
-    <section class="featured-books">
-      <h2>Featured Books</h2>
-      <p>Books will be listed here</p>
-    </section>
-
-  </main>
-
-  <%- include("../partials/footer") %>
-
-</body>
-</html>
+<%- include('layouts/footer') %>

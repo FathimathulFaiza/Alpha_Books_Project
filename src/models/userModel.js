@@ -1,5 +1,6 @@
 
 import mongoose from "mongoose"
+import { type } from "os"
 
 
 const userSchema = new mongoose.Schema({
@@ -27,6 +28,16 @@ const userSchema = new mongoose.Schema({
     isBlocked : {
         type : Boolean,
         default : false
+    },
+    isVerified : {
+        type : Boolean,
+        default : false
+    },
+    emailOtpCode : {
+        type : String
+    },
+    emailOtpExpiry : {
+        type : Date
     }
 
 },{timestamps : true}

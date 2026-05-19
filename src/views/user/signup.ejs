@@ -1,87 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Sign Up | Alpha Books</title>
+<%- include('layouts/header') %>
 
-  <link rel="stylesheet" href="/public/css/style.css" />
-</head>
+<main style="max-width: 1100px; margin: 60px auto; padding: 0 20px; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 60px; min-height: 80vh; margin-bottom: 120px;">
+    
+    <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
+        <img src="/images/book_signup.jpg" 
+             alt="Alpha Books Signup" 
+             style="width: 100%; max-width: 500px; height: 550px; object-fit: cover; border-radius: 4px;">
+    </div>
 
-<body class="auth-page">
-
-  <!-- Header -->
-  <%- include("../partials/header") %>
-
-  <main class="auth-container">
-
-    <!-- LEFT PANEL -->
-    <section class="auth-left">
-      <h1>Join Alpha Books 📚</h1>
-      <p>
-        Create your account and start discovering
-        amazing books today.
-      </p>
-    </section>
-
-    <!-- RIGHT PANEL -->
-    <section class="auth-right">
-      <h2>Sign Up</h2>
-
-      <form method="POST" action="/signup" class="auth-form">
-
-        <!-- Full Name -->
-        <div class="form-group">
-          <label for="fullName">Full Name</label>
-          <input
-            type="text"
-            id="fullName"
-            name="fullName"
-            placeholder="Your full name"
-            required
-          />
+    <div style="flex: 1; max-width: 420px;">
+        
+        <div style="margin-bottom: 30px;">
+            <h2 style="color: #000000; font-size: 32px; font-weight: 500; margin-bottom: 10px; letter-spacing: 0.5px;">Create an account</h2>
+            <p style="color: #000000; font-size: 16px; opacity: 0.8;">Enter your details below</p>
         </div>
 
-        <!-- Email -->
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="you@example.com"
-            required
-          />
+        <form action="/signup" method="POST" style="display: flex; flex-direction: column; gap: 25px;">
+            
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+                <input type="text" id="firstName" name="firstName" placeholder="First Name" required 
+                       style="width: 100%; padding: 10px 0; border: none; border-bottom: 1px solid #cccccc; font-size: 16px; outline: none; background: transparent;">
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+                <input type="text" id="lastName" name="lastName" placeholder="Last Name" required 
+                       style="width: 100%; padding: 10px 0; border: none; border-bottom: 1px solid #cccccc; font-size: 16px; outline: none; background: transparent;">
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+                <input type="email" id="email" name="email" placeholder="Email" required 
+                       style="width: 100%; padding: 10px 0; border: none; border-bottom: 1px solid #cccccc; font-size: 16px; outline: none; background: transparent;">
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+                <input type="password" id="password" name="password" placeholder="Password" required 
+                       style="width: 100%; padding: 10px 0; border: none; border-bottom: 1px solid #cccccc; font-size: 16px; outline: none; background: transparent;">
+            </div>
+
+            <button type="submit" style="background-color: #000000; color: white; padding: 16px; border: none; border-radius: 4px; font-size: 16px; font-weight: 500; cursor: pointer; margin-top: 10px; width: 100%;">
+                Create Account
+            </button>
+
+            <button type="button" style="background-color: transparent; color: #000000; padding: 14px; border: 1px solid #cccccc; border-radius: 4px; font-size: 16px; font-weight: 400; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;">
+                <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google Logo" style="width: 20px; height: 20px;">
+                Sign up with Google
+            </button>
+
+        </form>
+
+        <div style="text-align: center; margin-top: 30px; color: #000000; opacity: 0.7; font-size: 16px;">
+            Already have account? <a href="/login" style="color: #000000; text-decoration: underline; font-weight: 500; margin-left: 10px;">Log in</a>
         </div>
 
-        <!-- Password -->
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Create a strong password"
-            required
-          />
-        </div>
+    </div>
 
-        <!-- Submit -->
-        <button type="submit" class="btn-primary">
-          Create Account
-        </button>
-      </form>
+</main>
 
-      <!-- Switch -->
-      <p class="auth-switch">
-        Already have an account?
-        <a href="/login">Login</a>
-      </p>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <%- include("../partials/footer") %>
-
-</body>
-</html>
+<%- include('layouts/footer') %>
