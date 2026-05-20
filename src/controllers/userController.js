@@ -7,7 +7,7 @@ import User from '../models/userModel.js'
 
 const generateOTP = ()=>{
     const otp = Math.floor(100000 + Math.random() * 900000).toString()   // creating 6 digit string
-    const expiry = new Date(Date.now() + 60000)  // 2min expiry
+    const expiry = new Date(Date.now() + 120000)  // 2min expiry
 
     return {otp, expiry}
 }
@@ -147,11 +147,19 @@ const postVerifyOTP = async (req,res)=>{
         // taking the actual OTP from the session
         const sessionOTP = req.session.userOtp
         const userData = req.session.userData
+        const otpExpiry = req.session.otpExpiry  // take the expiry time from the session
 
-        // Troubleshooting Logs (നിങ്ങൾക്ക് ടെർമിനലിൽ ചെക്ക് ചെയ്യാൻ വേണ്ടി ചേർത്തത്)
-        console.log("--- OTP Verification Check ---");
+    
         console.log("OTP typed by user in frontend:", userOTP);
         console.log("Actual OTP saved in session:", sessionOTP);
+
+
+        // before matching the otp check the otp has expired
+        if(!otpExpiry || new Date() > new Date(otpExpiry)){
+            console.log("Verification Failed : OTP has expired")
+            return res.send("OTP has expired ...! Please click Resend OTP")
+
+        }
 
         // checking the both OTP matches
         if(userOTP === sessionOTP){     
