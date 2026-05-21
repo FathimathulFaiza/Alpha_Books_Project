@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpha Books</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-</head>
-<body>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 mb-4">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
     <div class="container">
-        
         <a class="navbar-brand fw-bold text-primary fs-3" href="/">Alpha<span class="text-dark">Books</span></a>
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -21,7 +7,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-medium">
+            <ul class="navbar-expand navbar-nav me-auto mb-2 mb-lg-0 fw-medium">
                 <li class="nav-item">
                     <a class="nav-link active" href="/">Home</a>
                 </li>
@@ -32,20 +18,20 @@
 
             <div class="d-flex align-items-center gap-3">
                 <% if (locals.user) { %>
-                    <a href="/cart" class="text-dark position-relative me-3">
+                    <a href="/cart" class="text-dark position-relative me-2">
                         <i class="bi bi-cart fs-4"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
                     </a>
 
                     <div class="dropdown">
                         <button class="btn btn-outline-primary dropdown-toggle fw-bold px-3" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                            Hi, <%= locals.user.firstName %>
+                            Hi, <%= user.firstName %>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userMenu">
-                            <li><a class="dropdown-item py-2" href="/profile">My Profile</a></li>
-                            <li><a class="dropdown-item py-2" href="/orders">My Orders</a></li>
+                            <li><a class="dropdown-menu-item dropdown-item py-2" href="/profile">My Profile</a></li>
+                            <li><a class="dropdown-menu-item dropdown-item py-2" href="/orders">My Orders</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger py-2" href="/logout">Logout</a></li>
+                            <li><a class="dropdown-menu-item dropdown-item text-danger py-2" href="/logout">Logout</a></li>
                         </ul>
                     </div>
                 <% } else { %>
@@ -54,8 +40,8 @@
                 <% } %>
             </div>
         </div>
-
     </div>
 </nav>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

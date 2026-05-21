@@ -43,4 +43,11 @@
  app.use("/admin",adminRouter)
 
 
+ // middleware to get the navbar for all the pages for logged in user
+
+ app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    next();
+});
+
 export default app

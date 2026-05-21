@@ -25,15 +25,29 @@ userRouter.get('/login',userController.loadLogin)  // get the login page
 
 userRouter.post('/login', userController.postLogin)  // route to recieve the data from login page (form data)
 
-userRouter.get('/logout', userController.logout)  // logout user
-
 userRouter.get('/resend-otp', userController.resendOTP)  // load when resend otp button clicks
+
+userRouter.get('/forgot-password',userController.loadForgotPassword) // load the forgot password page
+
+userRouter.post('/forgot-password',userController.postForgotPassword)   // when user submit the email
+
+userRouter.get('/forgot-password-otp',userController.loadForgotPasswordOTP)  // load the forgot password otp page
+
+userRouter.post('/forgot-password-otp',userController.verifyForgotPasswordOTP)   // verify the otp (post)
+
+userRouter.get('/reset-password',userController.loadRestPassword)    // get the reset password page
+
+userRouter.get('/reset-password',userController.loadRestPassword)    // load the reset-password page (get)
+
+userRouter.post('/reset-password',userController.postResetPassword)  // to submit the new password  (post)
+
+userRouter.get('/profile',userController.loadProfile)  // load the user profile page
 
 
 
  
 
 
-
+userRouter.get('/logout', userController.logout)  // logout user
 
 export default userRouter

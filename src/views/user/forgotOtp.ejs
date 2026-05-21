@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify OTP | Alpha Books</title>
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        .otp-page-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 75vh;
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .otp-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #f1f5f9;
+        }
+        .otp-card h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+        .otp-card p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+        
+        .otp-box-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .otp-field {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            transition: all 0.2s;
+            color: #1e293b;
+            background-color: #f8fafc;
+        }
+        .otp-field:focus {
+            border-color: #2563eb;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+        
+        .verify-btn {
+            width: 100%;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+        .verify-btn:hover {
+            background-color: #1d4ed8;
+        }
+        .resend-text {
+            margin-top: 24px !important;
+            font-size: 14px;
+        }
+        .resend-text a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .resend-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* 💡 എറർ മെസ്സേജ് കാണിക്കാനുള്ള ഭംഗിയുള്ള CSS സ്റ്റൈൽ */
+        .error-message {
+            color: #ef4444;
+            background-color: #fee2e2;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid #fca5a5;
+        }
+    </style>
+</head>
+<body>
+
+   <%- include("layouts/header") %>
+
+   <div class="otp-page-wrapper">
+       <div class="otp-card">
+           <h2>Verify Your Account</h2>
+           <p>Enter the 6-digit OTP code sent to your registered email address to continue.</p>
+
+           <% if (typeof error !== 'undefined' && error) { %>
+               <div class="error-message">
+                   <%= error %>
+               </div>
+           <% } %>
+           
+           <form action="/forgot-password-otp" method="POST" id="otpForm">
+               <div class="form-group">
+                   <label>Enter Security Code</label>
+                   
+                   <div class="otp-box-container">
+                       <input type="text" class="otp-field" maxlength="1" required pattern="\d">
+                       <input type="text" class="otp-field" maxlength="1" required pattern="\d">
+                       <input type="text" class="otp-field" maxlength="1" required pattern="\d">
+                       <input type="text" class="otp-field" maxlength="1" required pattern="\d">
+                       <input type="text" class="otp-field" maxlength="1" required pattern="\d">
+                       <input type="text" class="otp-field" maxlength="1" required pattern="\d">
+                   </div>
+                   
+                   <input type="hidden" id="actualOtp" name="otp">
+               </div>
+               <button type="submit" class="verify-btn">Verify & Proceed</button>
+           </form>
+
+           <p class="resend-text">Didn't receive OTP? <a href="#">Resend Code</a></p>
+       </div>
+   </div>
+
+   <%- include("layouts/footer") %>
+
+   <script>
+       const inputs = document.querySelectorAll('.otp-field');
+       const hiddenInput = document.getElementById('actualOtp');
+       const form = document.getElementById('otpForm');
+
+       inputs.forEach((input, index) => {
+           // ഒരക്കമിട്ടാൽ അടുത്ത ബോക്സിലേക്ക് ഫോക്കസ് മാറ്റുക
+           input.addEventListener('input', (e) => {
+               if (input.value.length === 1 && index < inputs.length - 1) {
+                   inputs[index + 1].focus();
+               }
+               updateHiddenInput();
+           });
+
+           // 💡 മെച്ചപ്പെടുത്തിയ ബാക്ക്സ്പേസ് ലോജിക് (കൂടുതൽ സ്മൂത്ത് ആയി വർക്ക് ചെയ്യും)
+           input.addEventListener('keydown', (e) => {
+               if (e.key === 'Backspace') {
+                   if (input.value === '' && index > 0) {
+                       inputs[index - 1].focus();
+                   }
+               }
+           });
+       });
+
+       function updateHiddenInput() {
+           let combinedOtp = "";
+           inputs.forEach(input => {
+               combinedOtp += input.value;
+           });
+           hiddenInput.value = combinedOtp;
+       }
+
+       // 💡 ഫോം സബ്മിറ്റ് ചെയ്യുന്നതിന് തൊട്ടുമുൻപ് വാല്യൂസ് കൃത്യമായി അപ്ഡേറ്റ് ഉറപ്പാക്കാൻ
+       form.addEventListener('submit', () => {
+           updateHiddenInput();
+       });
+   </script>
+
+</body>
+</html>
