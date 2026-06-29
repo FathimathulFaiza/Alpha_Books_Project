@@ -6,7 +6,7 @@ export const isLogin = async (req,res,next)=>{
         
         if(req.session.admin_id){
           
-            next()            // if 'session' -> move to next page
+            next()            // if admin in the 'session' -> move to next page
         }
         else{
         
@@ -14,7 +14,8 @@ export const isLogin = async (req,res,next)=>{
         }
     }
     catch(error){
-        console.log(error.message)
+        console.log("Error in isLogin Middleware",error.message)
+        res.status(500).send("Internal Server Error")
     }
 }
 
@@ -24,13 +25,14 @@ export const isLogout = async (req,res,next) =>{
 
     try{
         if(req.session.admin_id){
-            res.redirect('/admin/dashboard')
+            res.redirect('/admin/dashboard')   // if admin is logged in redirect to dashboard page
         }
         else{
             next()
         }
     }
     catch(error){
-        console.log(error.message)
+        console.log("Error in isLogoput middleware ",error.message)
+        res.status(500).send("Internal Server Error")
     }
 }

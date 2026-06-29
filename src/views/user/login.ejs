@@ -41,10 +41,10 @@
                 Log In
             </button>
 
-            <button type="button" style="background-color: transparent; color: #000000; padding: 14px; border: 1px solid #cccccc; border-radius: 4px; font-size: 16px; font-weight: 400; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;">
-                <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google Logo" style="width: 20px; height: 20px;">
-                Sign in with Google
-            </button>
+            <a href="/auth/google" style="background-color: transparent; color: #000000; padding: 14px; border: 1px solid #cccccc; border-radius: 4px; font-size: 16px; font-weight: 400; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; text-decoration: none;">
+    <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google Logo" style="width: 20px; height: 20px;">
+    Sign in with Google
+</a>
 
         </form>
 
@@ -55,5 +55,39 @@
     </div>
 
 </main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);     // sweet alert error msg for blocked user
+    
+    // 1. checking the user is blocked
+    if (urlParams.get('blocked') === 'true') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Account Blocked!',
+            text: 'Your account has been blocked by the admin. Please contact support.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+            didClose: () => {
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+    }
+    // 2. checking any other error is there, if yes it shown through the url
+    else if (urlParams.has('error')) {
+        const errorMessage = urlParams.get('error');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: errorMessage, // URL- error msg
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+            didClose: () => {
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+    }
+</script>
 
 <%- include('layouts/footer') %>

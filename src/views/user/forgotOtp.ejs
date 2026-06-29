@@ -115,6 +115,24 @@
             font-weight: 500;
             border: 1px solid #fca5a5;
         }
+            /* Resend ബട്ടൺ സ്റ്റൈൽ */
+.disabled-link {
+    pointer-events: none;
+    color: #94a3b8; /* Gray color */
+    text-decoration: none;
+    opacity: 0.7;
+}
+.enabled-link {
+    pointer-events: auto;
+    color: #2563eb;
+    text-decoration: underline;
+    font-weight: 600;
+}
+.timer-text {
+    font-weight: bold;
+    color: #ef4444;
+}
+        
     </style>
 </head>
 <body>
@@ -150,48 +168,80 @@
                <button type="submit" class="verify-btn">Verify & Proceed</button>
            </form>
 
-           <p class="resend-text">Didn't receive OTP? <a href="#">Resend Code</a></p>
+          <p class="resend-text">
+    Didn't receive OTP? 
+    <span id="timer" class="timer-text">02:00</span>
+    <br>
+    <a href="/resend-forgot-password-otp" id="resendBtn" class="disabled-link">Resend Code</a>
+</p>
        </div>
    </div>
 
    <%- include("layouts/footer") %>
 
    <script>
-       const inputs = document.querySelectorAll('.otp-field');
-       const hiddenInput = document.getElementById('actualOtp');
-       const form = document.getElementById('otpForm');
 
-       inputs.forEach((input, index) => {
-           // ഒരക്കമിട്ടാൽ അടുത്ത ബോക്സിലേക്ക് ഫോക്കസ് മാറ്റുക
-           input.addEventListener('input', (e) => {
-               if (input.value.length === 1 && index < inputs.length - 1) {
-                   inputs[index + 1].focus();
-               }
-               updateHiddenInput();
-           });
+    // 1. OTP input logic (Input boxes focus & value handling)
+    const inputs = document.querySelectorAll('.otp-field');
+    const hiddenInput = document.getElementById('actualOtp');
+    const form = document.getElementById('otpForm');
 
-           // 💡 മെച്ചപ്പെടുത്തിയ ബാക്ക്സ്പേസ് ലോജിക് (കൂടുതൽ സ്മൂത്ത് ആയി വർക്ക് ചെയ്യും)
-           input.addEventListener('keydown', (e) => {
-               if (e.key === 'Backspace') {
-                   if (input.value === '' && index > 0) {
-                       inputs[index - 1].focus();
-                   }
-               }
-           });
-       });
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            if (input.value.length === 1 && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+            updateHiddenInput();
+        });
 
-       function updateHiddenInput() {
-           let combinedOtp = "";
-           inputs.forEach(input => {
-               combinedOtp += input.value;
-           });
-           hiddenInput.value = combinedOtp;
-       }
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace') {
+                if (input.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            }
+        });
+    });
 
-       // 💡 ഫോം സബ്മിറ്റ് ചെയ്യുന്നതിന് തൊട്ടുമുൻപ് വാല്യൂസ് കൃത്യമായി അപ്ഡേറ്റ് ഉറപ്പാക്കാൻ
-       form.addEventListener('submit', () => {
-           updateHiddenInput();
-       });
+    function updateHiddenInput() {
+        let combinedOtp = "";
+        inputs.forEach(input => {
+            combinedOtp += input.value;
+        });
+        hiddenInput.value = combinedOtp;
+    }
+
+    form.addEventListener('submit', () => {
+        updateHiddenInput();
+    });
+
+    // 2.  (Timer functionality)
+    let timeRemaining = 60; // 1 min
+    const timerElement = document.getElementById('timer');
+    const resendBtn = document.getElementById('resendBtn');
+
+    const countdown = setInterval(() => {
+        let minutes = Math.floor(timeRemaining / 60);
+        let seconds = timeRemaining % 60;
+
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+
+        timerElement.innerText = `${minutes}:${seconds}`;
+
+        if (timeRemaining <= 0) {
+            clearInterval(countdown);
+            timerElement.innerText = "Expired!";
+            
+            // if the timer ends, activate the resend button
+            resendBtn.classList.remove('disabled-link');
+            resendBtn.classList.add('enabled-link');
+        } else {
+            timeRemaining--;
+        }
+    }, 1000);
+
+       
    </script>
 
 </body>

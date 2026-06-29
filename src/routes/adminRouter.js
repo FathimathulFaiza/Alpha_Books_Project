@@ -1,42 +1,61 @@
 
+
 import express from "express"
-import Category from "../models/categoryModel.js"
-import Product from "../models/productModel.js"
-import adminController from "../controllers/adminController.js"
+
+
+import adminAuthController from "../controllers/admin/adminAuthController.js"
+import adminUserController from "../controllers/admin/adminUserController.js"
+import adminCategoryController from "../controllers/admin/adminCategoryController.js"
+import adminDashboardController from "../controllers/admin/adminDashboardController.js"
+
+
 import * as auth from '../middlewares/adminAuth.js'
 
 const adminRouter = express.Router()
 
 
-// routes
+// auth routes
+adminRouter.get('/login', auth.isLogout, adminAuthController.loadLogin)
+
+adminRouter.post('/login',auth.isLogout, adminAuthController.verifyLogin)
+
+adminRouter.get('/create_admin',adminAuthController.createAdmin)
+
+adminRouter.get('/logout',auth.isLogin,adminAuthController.logout)
 
 
-adminRouter.post('/login',adminController.verifyLogin)
 
-adminRouter.get('/create_admin',adminController.createAdmin)
-
-adminRouter.get('/dashboard',auth.isLogin,adminController.loadDashboard)   // show 'dashboard' only if logged in
-
-adminRouter.get('/login',auth.isLogout,adminController.loadLogin)  // do not show login page if already logged in
-
-adminRouter.get('/users',auth.isLogin,adminController.loadUsers)    // show the users list
-
-adminRouter.get('/users/toggle-block/:id', adminController.toggleBlockUser)   // block or unblock the user
-
-adminRouter.get('/category', auth.isLogin,adminController.getCategoryPage)  // list the category pages 
-
-adminRouter.post('/category/add',auth.isLogin,adminController.addCategory)   // add category
-
-adminRouter.get('/category/toggle-list/:id',auth.isLogin,adminController.toggleCategoryList) // toggele -> list/unList 
-
-adminRouter.get('/category/edit/:id',auth.isLogin,adminController.loadEditCategory)   // get edit category page
-
-adminRouter.post('/category/edit/:id',auth.isLogin,adminController.editCategory)   // update the edit category
+// dashboard
+adminRouter.get('/dashboard',auth.isLogin,adminDashboardController.loadDashboard)   // show 'dashboard' only if logged in
 
 
 
 
-adminRouter.get('/logout',auth.isLogin,adminController.logout)
+
+//user management
+adminRouter.get('/users',auth.isLogin,adminUserController.loadUsers)    // show the users list
+
+adminRouter.get('/users/toggle-block/:id', auth.isLogin, adminUserController.toggleBlockUser)   // block or unblock the user
+
+
+
+// category management
+adminRouter.get('/category', auth.isLogin,adminCategoryController.getCategoryPage)  // list the category pages 
+
+adminRouter.post('/category/add',auth.isLogin,adminCategoryController.addCategory)   // add category
+
+adminRouter.get('/category/toggle-list/:id',auth.isLogin,adminCategoryController.toggleCategoryList) // toggele -> list/unList 
+
+adminRouter.get('/category/edit/:id',auth.isLogin,adminCategoryController.loadEditCategory)   // get edit category page
+
+adminRouter.post('/category/edit/:id',auth.isLogin,adminCategoryController.editCategory)   // update the edit category
+
+
+
+// admin utilities
+
+
+
 
 export default adminRouter
 

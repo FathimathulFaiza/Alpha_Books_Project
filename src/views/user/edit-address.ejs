@@ -1,0 +1,105 @@
+<%- include('layouts/header') %>
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-9 col-md-8">
+            <div class="bg-light p-4 rounded shadow-sm">
+                <h3 class="mb-4 fw-bold text-dark">Edit Address</h3>
+                
+                <form action="/addresses/edit/<%= address._id %>" method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">First Name *</label>
+                            <input type="text" name="firstName" class="form-control" value="<%= address.firstName %>" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Last Name *</label>
+                            <input type="text" name="lastName" class="form-control" value="<%= address.lastName %>" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email ID (Optional)</label>
+                            <input type="email" name="email" class="form-control" value="<%= address.email %>">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" name="mobile" class="form-control" value="<%= address.mobile %>" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address *</label>
+                        <textarea name="addressLine" class="form-control" rows="3" required><%= address.addressLine %></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">District / Town *</label>
+                            <input type="text" name="cityOrDistrict" class="form-control" value="<%= address.cityOrDistrict %>" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">State *</label>
+                            <input type="text" name="state" class="form-control" value="<%= address.state %>" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Pin Code *</label>
+                            <input type="text" name="pincode" class="form-control" value="<%= address.pincode %>" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Landmark (Optional)</label>
+                        <input type="text" name="landmark" class="form-control" value="<%= address.landmark %>">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label d-block">Address Type *</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="addressType" value="Home" <%= address.addressType === 'Home' ? 'checked' : '' %>>
+                            <label class="form-check-label">Home</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="addressType" value="Work" <%= address.addressType === 'Work' ? 'checked' : '' %>>
+                            <label class="form-check-label">Work / Office</label>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <a href="/addresses" class="btn btn-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-dark px-4">Update Address</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // 1. Safely assign EJS values to JS constants
+    // If the variable is undefined, EJS will render it as an empty string
+    const errorMessage = '<%= typeof error !== "undefined" ? error : "" %>';
+    const successMessage = '<%= typeof message !== "undefined" ? message : "" %>';
+
+    // 2. Check and display Error
+    if (errorMessage && errorMessage.trim() !== "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: errorMessage
+        });
+    }
+
+    // 3. Check and display Success
+    if (successMessage && successMessage.trim() !== "") {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: successMessage
+        });
+    }
+</script>
+<%- include('layouts/footer') %>

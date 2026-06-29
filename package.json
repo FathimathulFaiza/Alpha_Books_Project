@@ -18,7 +18,10 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "mongoose": "^9.1.5",
+    "multer": "^2.2.0",
     "nodemailer": "^8.0.7",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "slugify": "^1.6.9"
   },
   "devDependencies": {

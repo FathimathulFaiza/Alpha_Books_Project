@@ -1,0 +1,87 @@
+
+<%- include('layouts/header') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="row">
+            
+            <div class="col-md-3 mb-4">
+                <div class="list-group">
+                    <a href="/profile" class="list-group-item list-group-item-action">My Profile</a>
+                    <a href="/addresses" class="list-group-item list-group-item-action">Manage Addresses</a>
+                    <a href="/change-password" class="list-group-item list-group-item-action">Change Password</a>
+                    <a href="/logout" class="list-group-item list-group-item-action text-danger">Logout</a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Edit Profile Details</h5>
+                    </div>
+                    <div class="card-body p-4">
+
+                        <% if (error) { %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= error %>
+                            </div>
+                        <% } %>
+
+                        <% if (message) { %>
+                            <div class="alert alert-success" role="alert">
+                                <%= message %>
+                            </div>
+                        <% } %>
+
+                        <form action="/profile/edit" method="POST">
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName" value="<%= user.firstName %>" required>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName" value="<%= user.lastName %>" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" value="<%= user.email %>" disabled>
+                                <div class="form-text text-muted">For security reasons, the email cannot be changed directly here.</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="mobile" class="form-label">Mobile Number</label>
+                                <input type="text" class="form-control" id="mobile" name="mobile" value="<%= user.mobile || '' %>" placeholder="Enter your mobile number">
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="/profile" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-success">Save Changes</button>
+                            </div>
+
+                        </form>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+<%- include('layouts/footer') %>

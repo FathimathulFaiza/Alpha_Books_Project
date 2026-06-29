@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+      
+        body {
+            font-family: 'Inter', sans-serif; /* മറ്റ് പേജുകളിലെ പോലെ sans-serif font */
+            background-color: #f8f9fa;
+        }
+        .otp-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* നല്ലൊരു shadow */
+        }
+        .otp-icon {
+            font-size: 3rem;
+            color: #0d6efd; /* Blue color */
+        }
+        .error-msg {
+            color: #ff3333;
+            font-weight: 500;
+        }
+        .timer-text {
+            font-weight: bold;
+            color: #ff3333;
+        }
+        .disabled-link {
+            pointer-events: none;
+            color: gray;
+            text-decoration: none;
+            opacity: 0.6;
+        }
+        .enabled-link {
+            pointer-events: auto;
+            color: #0d6efd; /* Blue from Login/Signup design */
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="height: 100vh;">
+            <div class="col-md-5">
+                <div class="card otp-card p-5 text-center">
+                    
+                    <div class="mb-4">
+                        <i class="bi bi-shield-lock-fill otp-icon"></i>
+                    </div>
+
+                    <h3 class="mb-3 fw-bold">OTP Verification</h3>
+                    <p class="text-muted mb-4">An OTP has been sent to your email. It will expire in 1 minutes. Please enter it below.</p>
+
+                    <% if (error) { %>
+                        <div class="error-msg alert alert-danger py-2 mb-4"><%= error %></div>
+                    <% } %>
+
+                    <form action="/otp-verify" method="POST">
+                        <div class="mb-4">
+                            <input type="text" name="otp" placeholder="Enter 6-digit OTP" required maxlength="6" 
+                                class="form-control form-control-lg text-center fw-bold fs-4" style="letter-spacing: 5px;">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold py-2 mb-3">Verify OTP</button>
+                    </form>
+
+                    <br>
+
+                    <div class="mt-2 text-center">
+                        <p class="mb-2">Time remaining: <span id="timer" class="timer-text">02:00</span></p>
+                        
+                        <p class="mb-0 text-muted">Didn't receive the OTP? 
+                            <a href="/resend-otp" id="resendBtn" class="disabled-link ms-1">Resend OTP</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timeRemaining = 60; // 1 min
+        const timerElement = document.getElementById('timer');
+        const resendBtn = document.getElementById('resendBtn');
+
+        const countdown = setInterval(() => {
+            let minutes = Math.floor(timeRemaining / 60);
+            let seconds = timeRemaining % 60;
+
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+
+            timerElement.innerText = `${minutes}:${seconds}`;
+
+            if (timeRemaining <= 0) {
+                clearInterval(countdown);
+                timerElement.innerText = "Expired!";
+                
+                resendBtn.classList.remove('disabled-link');
+                resendBtn.classList.add('enabled-link');
+            } else {
+                timeRemaining--;
+            }
+        }, 1000);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

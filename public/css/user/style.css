@@ -12,3 +12,10 @@ body {
     background-color: var(--bg-color);
     margin: 0;
 }
+.profile-img-avatar {
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* ഇത് ഫോട്ടോയെ വട്ടത്തിൽ ക്രമീകരിക്കാൻ സഹായിക്കും */
+    border-radius: 50%; /* വട്ടത്തിൽ കാണാൻ */
+    border: 1px solid #dee2e6; /* ഒരു ചെറിയ ബോർഡർ */
+}

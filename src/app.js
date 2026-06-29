@@ -5,8 +5,13 @@
  import adminRouter from "./routes/adminRouter.js"
  import path from "path"
  import { fileURLToPath } from "url"
+ import './config/passport.js' // google auth
+ import passport from "passport";
 
  const app = express()
+
+
+
  const __filename = fileURLToPath(import.meta.url)
  const __dirname = path.dirname(__filename)
 
@@ -31,10 +36,18 @@
    }) );
 
 
+ app.use(passport.initialize())
+ app.use(passport.session())
+
+
+
    // middleware to get the data of the user in all ejs pages
    app.use((req,res,next)=>{
-    res.locals.user = req.session.user || null;  // if user is logged in pass data to ejs, or else set null
+    res.locals.user = req.session.user || req.user ||  null;  // if user is logged in pass data to ejs, or else set null
     next()
+
+    // res.locals.user -> google auth user
+    // req.session.user -> normal logged in user
    })
 
 //  routers
@@ -43,11 +56,6 @@
  app.use("/admin",adminRouter)
 
 
- // middleware to get the navbar for all the pages for logged in user
 
- app.use((req, res, next) => {
-    res.locals.user = req.session.user || null;
-    next();
-});
 
 export default app

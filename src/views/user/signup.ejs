@@ -28,6 +28,11 @@
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 2px;">
+                <input type="tel" id="phone" name="phone" placeholder="Phone" required 
+                       style="width: 100%; padding: 10px 0; border: none; border-bottom: 1px solid #cccccc; font-size: 16px; outline: none; background: transparent;">
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 2px;">
                 <input type="email" id="email" name="email" placeholder="Email" required 
                        style="width: 100%; padding: 10px 0; border: none; border-bottom: 1px solid #cccccc; font-size: 16px; outline: none; background: transparent;">
             </div>
@@ -37,14 +42,26 @@
                        style="width: 100%; padding: 10px 0; border: none; border-bottom: 1px solid #cccccc; font-size: 16px; outline: none; background: transparent;">
             </div>
 
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required 
+                       style="width: 100%; padding: 10px 0; border: none; border-bottom: 1px solid #cccccc; font-size: 16px; outline: none; background: transparent;">
+            </div>
+
             <button type="submit" style="background-color: #000000; color: white; padding: 16px; border: none; border-radius: 4px; font-size: 16px; font-weight: 500; cursor: pointer; margin-top: 10px; width: 100%;">
                 Create Account
             </button>
 
-            <button type="button" style="background-color: transparent; color: #000000; padding: 14px; border: 1px solid #cccccc; border-radius: 4px; font-size: 16px; font-weight: 400; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;">
-                <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google Logo" style="width: 20px; height: 20px;">
-                Sign up with Google
-            </button>
+           <a href="/auth/google" style="text-decoration: none;">
+    <div style="background-color: transparent; color: #000000; padding: 14px; border: 1px solid #cccccc; border-radius: 4px; font-size: 16px; font-weight: 400; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 20px;">
+        <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google Logo" style="width: 20px; height: 20px;">
+        Sign up with Google
+    </div>
+</a>
+            <% if (error) { %>
+                <div class="alert alert-danger text-center my-3" role="alert">
+                    <%= error %>
+                </div>
+            <% } %>
 
         </form>
 
